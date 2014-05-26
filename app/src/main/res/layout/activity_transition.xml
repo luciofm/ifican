@@ -19,6 +19,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:padding="8dp"/>
     <TextView
         android:layout_width="match_parent"

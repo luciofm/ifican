@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseActivity;
 import com.luciofm.ifican.app.R;
+import com.luciofm.ifican.app.anim.LayerEnablingAnimatorListener;
 import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
 import com.luciofm.ifican.app.util.Dog;
 import com.luciofm.ifican.app.util.IOUtils;
@@ -113,17 +114,18 @@ public class TransitionActivity extends BaseActivity {
         image.setTranslationX(leftDelta);
         image.setTranslationY(topDelta);
 
-        // We'll fade the text in later
-        text1.setAlpha(0);
 
         // Animate scale and translation to go from thumbnail to full size
         image.animate().setDuration(duration)
                 .scaleX(1).scaleY(1)
                 .translationX(0).translationY(0)
                 .setInterpolator(sDecelerator)
-                .setListener(new SimpleAnimatorListener() {
+                .setListener(new LayerEnablingAnimatorListener(image) {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        text1.setVisibility(View.VISIBLE);
+                        text1.setAlpha(0);
                         text1.setTranslationY(text1.getHeight());
                         text1.animate().setDuration(duration / 2)
                                 .translationY(0).alpha(1)
@@ -201,9 +203,10 @@ public class TransitionActivity extends BaseActivity {
                                 .scaleY(heightScale)
                                 .translationX(leftDelta)
                                 .translationY(topDelta)
-                                .setListener(new SimpleAnimatorListener() {
+                                .setListener(new LayerEnablingAnimatorListener(image) {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
                                         finish();
                                     }
                                 });
