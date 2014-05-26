@@ -1,0 +1,42 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/pink"
+    android:animateLayoutChanges="true"
+    android:gravity="center"
+    android:id="@+id/container"
+    android:clickable="true"
+    tools:context="com.luciofm.ifican.app.ui.NinthFragment">
+
+    <TextView
+        android:id="@+id/text2"
+        android:text="EXEMPLOS"
+        android:layout_centerInParent="true"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="monospace"
+        android:background="@color/soft_black"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
+    <com.luciofm.ifican.app.widget.TextView
+        android:id="@+id/text1"
+        android:text="LayoutTransitions"
+        android:padding="20dp"
+        android:gravity="center"
+        android:textSize="80sp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:background="@color/pink"
+        app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
+
+</LinearLayout>

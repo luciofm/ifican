@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toplevel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text1"
+        android:fontFamily="monospace"
+        android:textSize="26sp"
+        android:textColor="@android:color/white"
+        android:background="@color/soft_black"
+        android:layout_marginLeft="340dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:padding="8dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text2"
+        android:fontFamily="monospace"
+        android:textSize="26sp"
+        android:textColor="@android:color/white"
+        android:background="@color/soft_black"
+        android:layout_marginLeft="340dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:padding="8dp"
+        android:visibility="gone"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text3"
+        android:fontFamily="monospace"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:background="@color/soft_black"
+        android:layout_marginLeft="340dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:layout_marginBottom="30dp"/>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_margin="30dp"
+        android:id="@+id/thumb"
+        tools:src="@drawable/dog1"/>
+</FrameLayout>

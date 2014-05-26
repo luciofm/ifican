@@ -1,0 +1,63 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/orange"
+    android:animateLayoutChanges="true"
+    android:id="@+id/container"
+    android:clickable="true"
+    android:gravity="center"
+    tools:context="com.luciofm.ifican.app.ui.SixthFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/container2"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:gravity="center">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif1"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/attention1" />
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif3"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/attention3" />
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif2"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/attention2" />
+    </LinearLayout>
+
+    <com.luciofm.ifican.app.widget.TextView
+        android:id="@+id/text1"
+        android:text="Chamar a ATENÇÃO"
+        android:gravity="center"
+        android:textSize="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textColor="@color/orange"
+        android:background="@color/green"
+        app:typeFace="YanoneKaffeesatz-Regular.ttf"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"/>
+
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink">#FF4E50</color>
+    <color name="orange">#FC913A</color>
+    <color name="light_yellow">#EDE574</color>
+    <color name="yellow">#F9D423</color>
+    <color name="green">#E1F5C4</color>
+
+    <color name="soft_pink">#77FF4E50</color>
+    <color name="soft_orange">#77FC913A</color>
+    <color name="soft_light_yellow">#77EDE574</color>
+    <color name="soft_yellow">#77F9D423</color>
+    <color name="soft_green">#77E1F5C4</color>
+    <color name="soft_gray">#70202020</color>
+    <color name="soft_black">#C0000000</color>
+</resources>

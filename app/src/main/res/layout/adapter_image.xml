@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:foreground="@drawable/image_selector_animated">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        tools:src="@drawable/dog4"
+        android:id="@+id/image"/>
+</FrameLayout>
