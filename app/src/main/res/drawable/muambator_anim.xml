@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+                android:oneshot="false">
+
+    <item android:drawable="@drawable/muambator_0" android:duration="150" />
+    <item android:drawable="@drawable/muambator_1" android:duration="150" />
+    <item android:drawable="@drawable/muambator_2" android:duration="150" />
+    <item android:drawable="@drawable/muambator_3" android:duration="150" />
+    <item android:drawable="@drawable/muambator_4" android:duration="150" />
+    <item android:drawable="@drawable/muambator_5" android:duration="150" />
+
+</animation-list>

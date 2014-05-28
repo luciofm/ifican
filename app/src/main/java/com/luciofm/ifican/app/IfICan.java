@@ -10,6 +10,10 @@ import java.util.HashMap;
  */
 public class IfICan extends Application {
 
+    /* scan codes from my presenter controller */
+    public static final int BUTTON_NEXT = 104;
+    public static final int BUTTON_PREV = 109;
+
     private HashMap<String, Typeface> typefaces = new HashMap<>();
 
     public Typeface getTypeface(String typeface) {

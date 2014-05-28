@@ -3,12 +3,14 @@ package com.luciofm.ifican.app.ui;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseActivity;
+import com.luciofm.ifican.app.IfICan;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.LayerEnablingAnimatorListener;
 import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
@@ -48,9 +51,13 @@ public class TransitionActivity extends BaseActivity {
     TextView text2;
     @InjectView(R.id.text3)
     TextView text3;
+    @InjectView(R.id.text4)
+    TextView text4;
 
     Dog dog;
     ViewInfo info;
+
+    int currentStep = 1;
 
     private BitmapDrawable bitmapDrawable;
     private ColorMatrix colorizerMatrix = new ColorMatrix();
@@ -71,12 +78,14 @@ public class TransitionActivity extends BaseActivity {
         dog = bundle.getParcelable("DOG");
 
         background = new ColorDrawable(getResources().getColor(R.color.yellow));
+        background.setAlpha(0);
         topLevel.setBackground(background);
         image.setImageResource(dog.getResource());
 
-        text1.setText(Html.fromHtml(IOUtils.readFile(this, "source/predraw.java.html")));
-        text2.setText(Html.fromHtml(IOUtils.readFile(this, "source/init.java.html")));
-        text3.setText(Html.fromHtml(IOUtils.readFile(this, "source/anim1.java.html")));
+        text1.setText(Html.fromHtml(IOUtils.readFile(this, "source/itemclick.java.html")));
+        text2.setText(Html.fromHtml(IOUtils.readFile(this, "source/predraw.java.html")));
+        text3.setText(Html.fromHtml(IOUtils.readFile(this, "source/init.java.html")));
+        text4.setText(Html.fromHtml(IOUtils.readFile(this, "source/anim1.java.html")));
 
         if (savedInstanceState == null){
             image.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -115,77 +124,94 @@ public class TransitionActivity extends BaseActivity {
         image.setTranslationY(topDelta);
 
 
-        // Animate scale and translation to go from thumbnail to full size
-        image.animate().setDuration(duration)
-                .scaleX(1).scaleY(1)
-                .translationX(0).translationY(0)
-                .setInterpolator(sDecelerator)
-                .setListener(new LayerEnablingAnimatorListener(image) {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        text1.setVisibility(View.VISIBLE);
-                        text1.setAlpha(0);
-                        text1.setTranslationY(text1.getHeight());
-                        text1.animate().setDuration(duration / 2)
-                                .translationY(0).alpha(1)
-                                .setInterpolator(sDecelerator);
-                    }
-                });
-        ObjectAnimator bgAnim = ObjectAnimator.ofInt(background, "alpha", 0, 255);
-        bgAnim.setDuration(duration * 2);
-        bgAnim.start();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                image.animate().setDuration(duration)
+                        .scaleX(1).scaleY(1)
+                        .translationX(0).translationY(0)
+                        .setInterpolator(sDecelerator)
+                        .setListener(new LayerEnablingAnimatorListener(image) {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                text1.setVisibility(View.VISIBLE);
+                                text1.setAlpha(0);
+                                text1.setTranslationY(text1.getHeight());
+                                text1.animate().setDuration(duration / 2)
+                                        .translationY(0).alpha(1)
+                                        .setInterpolator(sDecelerator);
+                                super.onAnimationEnd(animation);
+                            }
+                        });
+                ObjectAnimator bgAnim = ObjectAnimator.ofInt(background, "alpha", 0, 255);
+                bgAnim.setDuration(duration * 2);
+                bgAnim.start();
+            }
+        }, 100);
+    }
+
+    public void onNextPressed() {
+        switch (++currentStep) {
+            case 2:
+                onText1Click();
+                break;
+            case 3:
+                onText2Click();
+                break;
+            case 4:
+                onText3Click();
+                break;
+            case 5:
+                onText4Click();
+                break;
+        }
     }
 
     @OnClick(R.id.text1)
     public void onText1Click() {
         final long duration = (long) (ANIM_DURATION);
 
-        text2.setAlpha(0);
-        text2.setVisibility(View.VISIBLE);
-
-        text1.animate().translationY(text1.getHeight())
-                .setDuration(duration / 2).alpha(0)
-                .setInterpolator(sDecelerator)
-                .setListener(new SimpleAnimatorListener() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        text2.setTranslationY(text2.getHeight());
-                        text2.animate().setDuration(duration / 2)
-                                .translationY(0).alpha(1)
-                                .setInterpolator(sDecelerator);
-                        text1.setVisibility(View.GONE);
-                    }
-                });
+        animateText(text1, text2);
     }
 
     @OnClick(R.id.text2)
     public void onText2Click() {
         final long duration = (long) (ANIM_DURATION);
 
-        text3.setAlpha(0);
-        text3.setVisibility(View.VISIBLE);
+        animateText(text2, text3);
+    }
 
-        text2.animate().translationY(text2.getHeight())
+    @OnClick(R.id.text3)
+    public void onText3Click() {
+        animateText(text3, text4);
+    }
+
+
+    private void animateText(final View oldView, final View newView) {
+        final long duration = (long) (ANIM_DURATION);
+
+        newView.setAlpha(0);
+        newView.setVisibility(View.VISIBLE);
+
+        oldView.animate().translationY(oldView.getHeight())
                 .setDuration(duration / 2).alpha(0)
                 .setInterpolator(sDecelerator)
                 .setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        text3.setTranslationY(text3.getHeight());
-                        text3.animate().setDuration(duration / 2)
+                        newView.setTranslationY(newView.getHeight());
+                        newView.animate().setDuration(duration / 2)
                                 .translationY(0).alpha(1)
                                 .setInterpolator(sDecelerator);
-                        text2.setVisibility(View.GONE);
+                        oldView.setVisibility(View.GONE);
                     }
                 });
-
-
     }
 
-    @OnClick(R.id.text3)
-    public void onText3Click() {
-        animateOut(text3);
+    @OnClick(R.id.text4)
+    public void onText4Click() {
+        setResult(RESULT_OK);
+        animateOut(text4);
     }
 
     public void animateOut(View text) {
@@ -224,8 +250,10 @@ public class TransitionActivity extends BaseActivity {
             animateOut(text1);
         else if (text2.getVisibility() == View.VISIBLE)
             animateOut(text2);
-        else
+        else if (text3.getVisibility() == View.VISIBLE)
             animateOut(text3);
+        else
+            animateOut(text4);
     }
 
     @Override
@@ -234,5 +262,22 @@ public class TransitionActivity extends BaseActivity {
 
         // override transitions to skip the standard window animations
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event);
+        if (keyCode == 0) {
+            int scanCode = event.getScanCode();
+            switch (scanCode) {
+                case IfICan.BUTTON_NEXT:
+                    onNextPressed();
+                    break;
+                case IfICan.BUTTON_PREV:
+                    onBackPressed();
+                    break;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

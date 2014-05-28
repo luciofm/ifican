@@ -25,4 +25,10 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.reset(this);
         super.onDestroyView();
     }
+
+    public abstract void onNextPressed();
+
+    public void onPrevPressed() {
+        getActivity().onBackPressed();
+    }
 }

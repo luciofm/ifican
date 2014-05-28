@@ -1,0 +1,53 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/yellow"
+    android:animateLayoutChanges="true"
+    android:id="@+id/container"
+    android:clickable="true"
+    android:gravity="center"
+    tools:context="com.luciofm.ifican.app.ui.ContextFragment">
+
+    <com.luciofm.ifican.app.widget.TextView
+        android:id="@+id/text1"
+        android:layout_marginTop="40dp"
+        android:text="Manter o Contexto"
+        android:gravity="center"
+        android:textSize="120sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:textColor="@color/pink"
+        app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/container2"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gif1"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/context1" />
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="160dp"
+            android:id="@+id/gif2"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:src="@drawable/attention2" />
+    </LinearLayout>
+</LinearLayout>

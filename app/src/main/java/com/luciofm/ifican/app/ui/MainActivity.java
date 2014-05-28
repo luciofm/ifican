@@ -4,8 +4,12 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 
 import com.luciofm.ifican.app.BaseActivity;
+import com.luciofm.ifican.app.BaseFragment;
+import com.luciofm.ifican.app.IfICan;
 import com.luciofm.ifican.app.R;
 
 import java.util.ArrayList;
@@ -19,26 +23,35 @@ public class MainActivity extends BaseActivity {
 
     ArrayList<Class<? extends Fragment>> fragments = new ArrayList<>();
 
+    BaseFragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        fragments.add(FirstFragment.class);
-        fragments.add(SecondFragment.class);
-        fragments.add(ThirdFragment.class);
-        fragments.add(FourthFragment.class);
-        fragments.add(FifthFragment.class);
-        fragments.add(SixthFragment.class);
-        fragments.add(SeventhFragment.class);
+        fragments.add(IfICanFragment.class);
+        fragments.add(WhyFragment.class);
+        fragments.add(SoftTransitionsFragment.class);
+        fragments.add(TransitionsExampleFragment.class);
+        fragments.add(ContextFragment.class);
+        fragments.add(AtentionFragment.class);
+        fragments.add(FeedbackFragment.class);
         fragments.add(CodeFragment.class);
-        fragments.add(NinthFragment.class);
-        fragments.add(TenthFragment.class);
-        fragments.add(EleventhFragment.class);
+        fragments.add(LayoutTransitionsCodeFragment.class);
+        fragments.add(TouchFeedbackCodeFragment.class);
+        fragments.add(AnimationDrawableCodeFragment.class);
+        fragments.add(ObjectAnimatorCodeFragment.class);
+        fragments.add(ViewPropertyAnimatorCodeFragment.class);
+        fragments.add(MorphingButtonCodeFragment.class);
+        fragments.add(ActivityTransitionsCodeFragment.class);
+        fragments.add(QuestionsFragment.class);
 
         if (savedInstanceState == null)
             nextFragment(false);
+        else
+            currentFragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -70,11 +83,12 @@ public class MainActivity extends BaseActivity {
                 f.setArguments(args);
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-            ft.replace(R.id.fragmentContainer, f)
+            ft.replace(R.id.fragmentContainer, f, "current")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             if (backStack)
                 ft.addToBackStack(null);
             ft.commit();
+            currentFragment = (BaseFragment) f;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -92,5 +106,23 @@ public class MainActivity extends BaseActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         index = savedInstanceState.getInt("INDEX", 0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event);
+        currentFragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
+        if (keyCode == 0) {
+            int scanCode = event.getScanCode();
+            switch (scanCode) {
+                case IfICan.BUTTON_NEXT:
+                    currentFragment.onNextPressed();
+                    break;
+                case IfICan.BUTTON_PREV:
+                    currentFragment.onPrevPressed();
+                    break;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

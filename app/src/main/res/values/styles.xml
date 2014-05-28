@@ -6,6 +6,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/pink</item>
     </style>
 
     <style name="AppTheme.Transparent" parent="AppTheme">
@@ -13,4 +14,9 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="TextAppearance.AppTheme.FloatLabel" parent="android:TextAppearance.Small">
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

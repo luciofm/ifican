@@ -1,9 +1,7 @@
 package com.luciofm.ifican.app.ui;
 
-
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,26 +10,18 @@ import android.view.ViewGroup;
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.XFractionProperty;
-import com.luciofm.ifican.app.anim.YFractionProperty;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * A simple {@link Fragment} subclass.
- *
- */
-public class CodeFragment extends BaseFragment {
+public class WhyFragment extends BaseFragment {
 
-
-    public CodeFragment() {
-        // Required empty public constructor
+    public WhyFragment() {
     }
-
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_code;
+        return R.layout.fragment_why;
     }
 
     @Override
@@ -58,7 +48,8 @@ public class CodeFragment extends BaseFragment {
         }
 
         //Target will be filled in by the framework
-        return enter ? ObjectAnimator.ofFloat(null, new YFractionProperty(), 1f, 0f)
-                     : ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
+        if (enter)
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        else return ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
     }
 }

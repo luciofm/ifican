@@ -50,7 +50,20 @@
         android:visibility="gone"
         android:padding="8dp"
         android:layout_marginBottom="30dp"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text4"
+        android:fontFamily="monospace"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:background="@color/soft_black"
+        android:layout_marginLeft="340dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:layout_marginBottom="30dp"/>
     <ImageView
         android:layout_width="300dp"
         android:layout_height="300dp"

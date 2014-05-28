@@ -15,4 +15,8 @@
         <attr name="android:foregroundGravity" />
     </declare-styleable>
 
+    <declare-styleable name="FloatLabelLayout">
+        <attr name="floatLabelTextAppearance" format="reference" />
+        <attr name="floatLabelSidePadding" format="reference|dimension" />
+    </declare-styleable>
 </resources>

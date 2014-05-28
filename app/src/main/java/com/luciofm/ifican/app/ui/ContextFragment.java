@@ -15,40 +15,65 @@ import com.luciofm.ifican.app.anim.XFractionProperty;
 import com.luciofm.ifican.app.anim.YFractionProperty;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  *
  */
-public class CodeFragment extends BaseFragment {
+public class ContextFragment extends BaseFragment {
 
+    @InjectView(R.id.gif1)
+    GifImageView gif1;
+    @InjectView(R.id.container2)
+    View container2;
 
-    public CodeFragment() {
-        // Required empty public constructor
+    int currentStep = 1;
+
+    public ContextFragment() {
     }
-
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_code;
+        return R.layout.fragment_context;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
+        currentStep = 1;
         return v;
     }
 
     @Override
     public void onNextPressed() {
-        ((MainActivity) getActivity()).nextFragment();
+        switch (++currentStep) {
+            case 2:
+                gif1.setVisibility(View.VISIBLE);
+                container2.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                ((MainActivity) getActivity()).nextFragment();
+        }
     }
 
     @OnClick(R.id.container)
     public void onClick() {
         onNextPressed();
+    }
+
+    @OnClick(R.id.gif1)
+    public void onGifClick(GifImageView view) {
+        GifDrawable drawable = (GifDrawable) view.getDrawable();
+        if (drawable.isPlaying())
+            drawable.stop();
+        else
+            drawable.start();
     }
 
     @Override
@@ -59,6 +84,6 @@ public class CodeFragment extends BaseFragment {
 
         //Target will be filled in by the framework
         return enter ? ObjectAnimator.ofFloat(null, new YFractionProperty(), 1f, 0f)
-                     : ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
+                       : ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
     }
 }
