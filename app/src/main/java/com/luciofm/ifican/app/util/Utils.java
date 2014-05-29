@@ -16,6 +16,12 @@ public class Utils {
     private Utils() {
     }
 
+    public static void startGif(GifImageView view) {
+        GifDrawable drawable = (GifDrawable) view.getDrawable();
+        if (!drawable.isPlaying())
+            drawable.start();
+    }
+
     public static void stopGif(GifImageView view) {
         GifDrawable drawable = (GifDrawable) view.getDrawable();
         if (drawable.isPlaying())

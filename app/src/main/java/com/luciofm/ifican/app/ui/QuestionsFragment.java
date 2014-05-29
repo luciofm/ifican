@@ -3,10 +3,15 @@ package com.luciofm.ifican.app.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,11 +26,14 @@ import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.BuildConfig;
 import com.luciofm.ifican.app.R;
+import com.luciofm.ifican.app.anim.AnimUtils;
 import com.luciofm.ifican.app.anim.LayerEnablingAnimatorListener;
 import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
 import com.luciofm.ifican.app.util.MutableForegroundColorSpan;
@@ -49,9 +57,38 @@ public class QuestionsFragment extends BaseFragment {
     ViewGroup container2;
     @InjectView(R.id.text1)
     TextView text1;
+    @InjectView(R.id.text2)
+    TextView text2;
+    @InjectView(R.id.text3)
+    TextView text3;
+    @InjectView(R.id.text4)
+    TextView text4;
+    ObjectAnimator fireworks;
+
+    final private static float PROGRESS_TO_PIXELIZATION_FACTOR = 1000.0f;
+
+    @InjectView(R.id.container3)
+    ViewGroup container3;
+
+    @InjectView(R.id.image)
+    ImageView image;
+
+    @InjectView(R.id.imageMuambator1)
+    ImageView imageMuambator1;
+    @InjectView(R.id.imageMuambator2)
+    ImageView imageMuambator2;
+
+    @InjectView(R.id.imageWhi1)
+    ImageView imageWhi1;
+    @InjectView(R.id.imageWhi2)
+    ImageView imageWhi2;
+
+    Bitmap originalBitmap;
+    private int pink;
+    private int yellow;
+    private int green;
 
     private SpannableString title = new SpannableString("PERGUNTAS?");
-    private int currentStep;
 
     public QuestionsFragment() {
     }
@@ -67,8 +104,12 @@ public class QuestionsFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        currentStep = 1;
         container2.setVisibility(View.GONE);
+
+        originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.me);
+        pink = getResources().getColor(R.color.pink);
+        yellow = getResources().getColor(R.color.yellow);
+        green = getResources().getColor(R.color.green);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -84,8 +125,34 @@ public class QuestionsFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
+                fireworks.cancel();
                 animateOut();
                 break;
+            case 3:
+                ObjectAnimator background = ObjectAnimator.ofObject(container, "backgroundColor",
+                                                                    new ArgbEvaluator(), green,
+                                                                    pink).setDuration(300);
+                background.start();
+                container3.animate().alpha(0f).setDuration(300);
+                imageMuambator2.animate().alpha(0f).setDuration(300);
+                imageWhi2.animate().alpha(0f).setDuration(300);
+                image.setVisibility(View.VISIBLE);
+                image.animate().alpha(1f).setDuration(300);
+                ObjectAnimator pixalate = ObjectAnimator.ofInt(this, "pixalateFactor", 100, 0);
+                pixalate.setDuration(1200);
+                pixalate.start();
+                break;
+            case 4:
+                text2.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                text3.setVisibility(View.VISIBLE);
+                break;
+            case 6:
+                text4.setVisibility(View.VISIBLE);
+                break;
+            case 7:
+                ((MainActivity) getActivity()).nextFragment();
         }
     }
 
@@ -96,17 +163,18 @@ public class QuestionsFragment extends BaseFragment {
 
     private void animateTitle() {
         FireworksSpanGroup spanGroup = buildFireworksSpanGroup(0, title.length() - 1);
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(spanGroup, FIREWORKS_GROUP_PROGRESS_PROPERTY, 0.0f, 1.0f);
-        objectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        fireworks = ObjectAnimator.ofFloat(spanGroup, FIREWORKS_GROUP_PROGRESS_PROPERTY, 0.0f, 1.0f);
+        fireworks.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 //refresh
-                text1.setText(title);
+                if (isResumed())
+                    text1.setText(title);
             }
         });
-        objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        objectAnimator.setDuration(3000);
-        objectAnimator.start();
+        fireworks.setInterpolator(new AccelerateDecelerateInterpolator());
+        fireworks.setDuration(3000);
+        fireworks.start();
     }
 
     private FireworksSpanGroup buildFireworksSpanGroup(int start, int end) {
@@ -198,13 +266,69 @@ public class QuestionsFragment extends BaseFragment {
                 animator.setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        ((MainActivity) getActivity()).nextFragment();
+                        container2.setVisibility(View.GONE);
+                        animateAlpha();
                     }
                 });
                 animator.start();
+
+                container3.animate().alpha(1f).setDuration(300).setStartDelay(600).start();
+                ObjectAnimator background = ObjectAnimator.ofObject(container, "backgroundColor",
+                                                                    new ArgbEvaluator(), yellow,
+                                                                    green);
+                background.setDuration(300);
+                background.setStartDelay(600);
+                background.start();
+
                 return false;
             }
         });
+    }
+
+    private void animateAlpha() {
+        imageMuambator1.animate().alpha(0f).setDuration(1000).start();
+        imageMuambator2.animate().alpha(1f).setDuration(1000).start();
+        imageWhi1.animate().alpha(0f).setDuration(1000).start();
+        imageWhi2.animate().alpha(1f).setDuration(1000).start();
+    }
+
+    public void setPixalateFactor(int number) {
+        float factor = number / PROGRESS_TO_PIXELIZATION_FACTOR;
+
+        PixelizeImageAsyncTask asyncPixelateTask = new PixelizeImageAsyncTask();
+        asyncPixelateTask.execute(factor, originalBitmap);
+    }
+
+
+    /**
+     * Implementation of the AsyncTask class showing how to run the
+     * pixelization algorithm in the background, and retrieving the
+     * pixelated image from the resulting operation.
+     */
+    private class PixelizeImageAsyncTask extends AsyncTask<Object, Void, BitmapDrawable> {
+
+        @Override
+        protected BitmapDrawable doInBackground(Object... params) {
+            float pixelizationFactor = (Float)params[0];
+            Bitmap originalBitmap = (Bitmap)params[1];
+            return AnimUtils.builtInPixelization(getActivity(), pixelizationFactor, originalBitmap);
+        }
+
+        @Override
+        protected void onPostExecute(BitmapDrawable result) {
+            if (isResumed())
+                image.setImageDrawable(result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+
+        }
     }
 
     public static final int ANIM_DELAY = 30;
@@ -229,35 +353,13 @@ public class QuestionsFragment extends BaseFragment {
             v.setPivotY(v.getHeight() / 2);
             v.setPivotX(v.getWidth() / 2);
             anim = v.animate();
-            anim.alpha(0.2f).scaleY(12f).scaleX(12f).setInterpolator(accelerate)
+            anim.alpha(0f).scaleY(12f).scaleX(12f).setInterpolator(accelerate)
                     .setStartDelay(i * ANIM_DELAY * MULTIPLIER)
                     .setDuration((ANIM_DURATION - (i * ANIM_DELAY)) * MULTIPLIER)
                     .setListener(new LayerEnablingAnimatorListener(v));
-            /*ObjectAnimator scaleX = ObjectAnimator.ofFloat(v, View.SCALE_X, 20f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(v, View.SCALE_Y, 20f);
-            ObjectAnimator alpha = ObjectAnimator.ofFloat(v, View.ALPHA, 1f, 0.2f);
-
-            scaleX.setDuration((ANIM_DURATION - (i * ANIM_DELAY)) * MULTIPLIER);
-            scaleY.setDuration((ANIM_DURATION - (i * ANIM_DELAY)) * MULTIPLIER);
-            alpha.setDuration((ANIM_DURATION - (i * ANIM_DELAY)) * MULTIPLIER);
-            scaleX.setStartDelay(i * ANIM_DELAY * MULTIPLIER);
-            scaleY.setStartDelay(i * ANIM_DELAY * MULTIPLIER);
-            alpha.setStartDelay(i * ANIM_DELAY * MULTIPLIER);
-            scaleX.setInterpolator(accelerate);
-            scaleY.setInterpolator(accelerate);
-            alpha.setInterpolator(accelerate);
-            scaleX.addListener(new LayerEnablingAnimatorListener(v));
-
-            animators.add(scaleX);
-            animators.add(scaleY);
-            animators.add(alpha);*/
 
             container.getOverlay().add(v);
         }
-
-        /*AnimatorSet set = new AnimatorSet();
-        set.playTogether(animators);
-        return set;*/
         return anim;
     }
 }

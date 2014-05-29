@@ -53,7 +53,6 @@ public class TransitionsExampleFragment extends BaseFragment {
     int soft_pink;
     int green;
     int transparent;
-    int currentStep = 1;
 
     ViewInfo info;
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
@@ -83,7 +82,6 @@ public class TransitionsExampleFragment extends BaseFragment {
         soft_pink = getResources().getColor(R.color.soft_pink);
         green = getResources().getColor(R.color.green);
         transparent = Color.TRANSPARENT;
-        currentStep = 1;
 
         text1.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -116,10 +114,12 @@ public class TransitionsExampleFragment extends BaseFragment {
         switch (++currentStep) {
             case 2:
                 gif1.setVisibility(View.VISIBLE);
+                Utils.startGif(gif1);
                 break;
             case 3:
-                Utils.stopGif(gif1);
                 gif2.setVisibility(View.VISIBLE);
+                Utils.stopGif(gif1);
+                Utils.startGif(gif2);
                 break;
             case 4:
                 Utils.stopGif(gif2);
@@ -130,6 +130,28 @@ public class TransitionsExampleFragment extends BaseFragment {
             case 5:
                 ((MainActivity) getActivity()).nextFragment();
         }
+    }
+
+    @Override
+    public void onPrevPressed() {
+        if (--currentStep > 0) {
+            switch (currentStep) {
+                case 1:
+                    gif1.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    Utils.startGif(gif1);
+                    gif2.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    gif1.setVisibility(View.VISIBLE);
+                    gif2.setVisibility(View.VISIBLE);
+                    gif3.setVisibility(View.GONE);
+                    Utils.startGif(gif2);
+            }
+            return;
+        }
+        super.onPrevPressed();
     }
 
     @OnClick(R.id.container)

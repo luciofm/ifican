@@ -9,11 +9,15 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.AnimUtils;
+import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
 import com.luciofm.ifican.app.anim.XFractionProperty;
 import com.luciofm.ifican.app.anim.YFractionProperty;
 import com.luciofm.ifican.app.util.IOUtils;
@@ -31,6 +35,8 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
 
     @InjectView(R.id.container2)
     View container;
+    @InjectView(R.id.image)
+    ImageView image;
     @InjectView(R.id.text2)
     TextView text2;
 
@@ -46,6 +52,11 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
         ButterKnife.inject(this, v);
 
         text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/showlabel.java.html")));
+
+        image.setAlpha(0f);
+        image.setScaleX(0f);
+        image.setScaleY(0f);
+
         currentStep = 1;
         return v;
     }
@@ -55,6 +66,23 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
         switch (++currentStep) {
             case 2:
                 container.setVisibility(View.VISIBLE);
+                image.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        image.getViewTreeObserver().removeOnPreDrawListener(this);
+                        image.setPivotX(image.getX() / 2);
+                        image.setPivotY(image.getY() / 2);
+                        image.animate().alpha(1f).scaleY(1f).scaleX(1f)
+                                .rotation(720).setInterpolator(new AccelerateInterpolator())
+                                .setDuration(1000).setListener(new SimpleAnimatorListener() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                image.setAlpha(1f);
+                            }
+                        });
+                        return true;
+                    }
+                });
                 break;
             case 3:
                 text2.setVisibility(View.VISIBLE);
@@ -62,6 +90,29 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
             default:
                 ((MainActivity) getActivity()).nextFragment();
         }
+    }
+
+    @Override
+    public void onPrevPressed() {
+        if (--currentStep > 0) {
+            switch (currentStep) {
+                case 2:
+                    text2.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    image.animate().alpha(0f).scaleY(0f).scaleX(0f)
+                            .rotation(0).setInterpolator(new AccelerateInterpolator())
+                            .setDuration(1000).setListener(new SimpleAnimatorListener() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            container.setVisibility(View.GONE);
+                        }
+                    });
+                    break;
+            }
+            return;
+        }
+        super.onPrevPressed();
     }
 
     @OnClick(R.id.container)

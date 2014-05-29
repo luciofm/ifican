@@ -24,7 +24,6 @@ import pl.droidsonroids.gif.GifImageView;
 
 
 public class FeedbackFragment extends BaseFragment {
-    private int currentStep;
 
     @InjectView(R.id.container2)
     SquareGridLayout container2;
@@ -100,16 +99,58 @@ public class FeedbackFragment extends BaseFragment {
                     container2.addView(gif4, 0, params);
                     break;
                 case 6:
-                    container2.removeAllViews();
                     container2.setVisibility(View.GONE);
                     gif5.setVisibility(View.VISIBLE);
                     break;
                 case 7:
+                    container2.removeAllViews();
                     ((MainActivity) getActivity()).nextFragment();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onPrevPressed() {
+        if (--currentStep > 0) {
+            int position = container2.getChildCount() - 1;
+            GifImageView gif = null;
+            if (position >= 0)
+                gif = (GifImageView) container2.getChildAt(position);
+            /* UGLY HACK to hide last example */
+            if (currentStep == 5)
+                position = 5;
+            switch (position) {
+                case 1:
+                    Utils.stopGif(gif);
+                    container2.setVisibility(View.VISIBLE);
+                    container2.removeViewAt(0);
+                    break;
+                case 2:
+                    Utils.stopGif(gif);
+                    container2.removeViewAt(0);
+                    Utils.startGif((GifImageView) container2.getChildAt(position - 1));
+                    break;
+                case 3:
+                    Utils.stopGif(gif);
+                    container2.removeViewAt(0);
+                    Utils.startGif((GifImageView) container2.getChildAt(position - 1));
+                    break;
+                case 4:
+                    Utils.stopGif(gif);
+                    container2.removeViewAt(0);
+                    Utils.startGif((GifImageView) container2.getChildAt(position - 1));
+                    break;
+                case 5:
+                    gif5.setVisibility(View.GONE);
+                    container2.setVisibility(View.VISIBLE);
+                    Utils.startGif(gif);
+                    break;
+            }
+            return;
+        }
+        super.onPrevPressed();
     }
 
     @OnClick(R.id.container)

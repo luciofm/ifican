@@ -59,7 +59,7 @@
             android:clickable="true"
             android:textSize="70sp"
             android:background="@drawable/pressed_pink_on_green_animated"
-            android:text="TOUCH ME!!!\ngently"/>
+            android:text="TOUCH ME!!!\nsoftly"/>
 
         <TextView
             android:layout_width="match_parent"

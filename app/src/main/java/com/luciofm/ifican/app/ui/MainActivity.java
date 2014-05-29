@@ -21,9 +21,7 @@ public class MainActivity extends BaseActivity {
 
     int index = 0;
 
-    ArrayList<Class<? extends Fragment>> fragments = new ArrayList<>();
-
-    BaseFragment currentFragment;
+    ArrayList<Class<? extends BaseFragment>> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        fragments.add(IfICanFragment.class);
+        /*fragments.add(IfICanFragment.class);
         fragments.add(WhyFragment.class);
         fragments.add(SoftTransitionsFragment.class);
         fragments.add(TransitionsExampleFragment.class);
@@ -41,17 +39,16 @@ public class MainActivity extends BaseActivity {
         fragments.add(CodeFragment.class);
         fragments.add(LayoutTransitionsCodeFragment.class);
         fragments.add(TouchFeedbackCodeFragment.class);
-        fragments.add(AnimationDrawableCodeFragment.class);
+        fragments.add(AnimationDrawableCodeFragment.class);*/
         fragments.add(ObjectAnimatorCodeFragment.class);
         fragments.add(ViewPropertyAnimatorCodeFragment.class);
         fragments.add(MorphingButtonCodeFragment.class);
         fragments.add(ActivityTransitionsCodeFragment.class);
         fragments.add(QuestionsFragment.class);
+        fragments.add(TheEndFragment.class);
 
         if (savedInstanceState == null)
             nextFragment(false);
-        else
-            currentFragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
 
         getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -88,7 +85,6 @@ public class MainActivity extends BaseActivity {
             if (backStack)
                 ft.addToBackStack(null);
             ft.commit();
-            currentFragment = (BaseFragment) f;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -111,15 +107,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event);
-        currentFragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
+        BaseFragment fragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
         if (keyCode == 0) {
             int scanCode = event.getScanCode();
             switch (scanCode) {
                 case IfICan.BUTTON_NEXT:
-                    currentFragment.onNextPressed();
+                    fragment.onNextPressed();
                     break;
                 case IfICan.BUTTON_PREV:
-                    currentFragment.onPrevPressed();
+                    fragment.onPrevPressed();
                     break;
             }
         }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
@@ -30,9 +31,19 @@ import butterknife.OnClick;
 public class ObjectAnimatorCodeFragment extends BaseFragment {
 
     @InjectView(R.id.container2)
-    View container;
+    View container2;
+    @InjectView(R.id.container3)
+    View container3;
     @InjectView(R.id.text2)
     TextView text2;
+    @InjectView(R.id.text3)
+    TextView text3;
+    @InjectView(R.id.text4)
+    TextView text4;
+    @InjectView(R.id.image1)
+    ImageView image1;
+    @InjectView(R.id.image2)
+    ImageView image2;
     @InjectView(R.id.button)
     Button button;
 
@@ -47,7 +58,7 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/shake.java.html")));
+        text4.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/shake.java.html")));
         currentStep = 1;
         return v;
     }
@@ -56,13 +67,25 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
-                container.setVisibility(View.VISIBLE);
+                container2.setVisibility(View.VISIBLE);
+                image1.setVisibility(View.VISIBLE);
+                text2.setVisibility(View.VISIBLE);
                 break;
             case 3:
-                Utils.dispatchTouch(button);
+                image1.setVisibility(View.GONE);
+                text2.setVisibility(View.GONE);
+                image2.setVisibility(View.VISIBLE);
+                text3.setVisibility(View.VISIBLE);
                 break;
             case 4:
-                text2.setVisibility(View.VISIBLE);
+                container2.setVisibility(View.GONE);
+                container3.setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                Utils.dispatchTouch(button);
+                break;
+            case 6:
+                text4.setVisibility(View.VISIBLE);
                 break;
             default:
                 ((MainActivity) getActivity()).nextFragment();

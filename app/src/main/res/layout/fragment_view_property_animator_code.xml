@@ -23,18 +23,11 @@
         tools:visibility="visible"
         android:gravity="center">
 
-        <com.luciofm.ifican.app.widget.FloatLabelLayout
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:floatLabelTextAppearance="@style/TextAppearance.AppTheme.FloatLabel">
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/pink"
-                android:textColorHint="@color/soft_pink"
-                android:hint="Username"
-                android:textSize="50sp"/>
-        </com.luciofm.ifican.app.widget.FloatLabelLayout>
+            android:id="@+id/image"
+            android:src="@drawable/android"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

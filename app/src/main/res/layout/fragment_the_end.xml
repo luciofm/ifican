@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/green"
+             android:animateLayoutChanges="true"
+             android:id="@+id/container"
+             tools:context="com.luciofm.ifican.app.ui.QuestionsFragment">
+
+    <com.luciofm.ifican.app.widget.TextView
+        android:id="@+id/text1"
+        android:gravity="center"
+        android:textSize="110sp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/pink"
+        android:text="github.com/luciofm/ifican"
+        app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
+
+    <com.luciofm.ifican.app.widget.TextView
+        android:id="@+id/text2"
+        android:gravity="center"
+        android:textSize="110sp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/pink"
+        android:text="The End..."
+        android:visibility="gone"
+        app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
+</FrameLayout>

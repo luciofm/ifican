@@ -72,6 +72,20 @@ public class TouchFeedbackCodeFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onPrevPressed() {
+        if (--currentStep > 1) {
+            if (currentStep == 4) {
+                text2.setVisibility(View.VISIBLE);
+                text3.setVisibility(View.VISIBLE);
+                text4.setVisibility(View.GONE);
+            }
+            currentStep = 2;
+            return;
+        }
+        super.onPrevPressed();
+    }
+
     @OnClick(R.id.container)
     public void onClick() {
         onNextPressed();

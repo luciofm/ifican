@@ -25,7 +25,7 @@
         android:textColor="@color/green"
         app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -35,17 +35,65 @@
         android:visibility="gone"
         tools:visibility="visible"
         android:gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/image1"
+            android:src="@drawable/animation_linear"/>
+        <com.luciofm.ifican.app.widget.TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/green"
+            android:visibility="gone"
+            app:typeFace="YanoneKaffeesatz-Regular.ttf"
+            android:textSize="80sp"
+            android:text="Linear"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:layout_gravity="center"
+            android:id="@+id/image2"
+            android:visibility="gone"
+            android:src="@drawable/animation_nonlinear"/>
+        <com.luciofm.ifican.app.widget.TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:textColor="@color/green"
+            app:typeFace="YanoneKaffeesatz-Regular.ttf"
+            android:textSize="80sp"
+            android:visibility="gone"
+            android:text="Não Linear"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:layout_margin="30dp"
+        android:id="@+id/container3"
+        android:visibility="gone"
+        android:gravity="center">
 
         <Button android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:text="Shake me!!!"
-            android:textColor="@color/green"
-            android:textSize="50sp" />
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:text="Shake me!!!"
+                android:textColor="@color/green"
+                android:textSize="50sp" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/text2"
+            android:id="@+id/text4"
             android:visibility="gone"
             tools:visibility="visible"
             android:fontFamily="monospace"

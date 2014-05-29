@@ -13,10 +13,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
+    protected int currentStep = 1;
+
     public abstract int getLayout();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        currentStep = 1;
         return inflater.inflate(getLayout(), container, false);
     }
 
