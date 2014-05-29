@@ -72,6 +72,66 @@
             android:textSize="80sp"
             android:visibility="gone"
             android:text="Não Linear"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonLinear"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Linear"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAccelerate"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Accelerate"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAccelerateDecelerate"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Acc/Dec"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAnticipate"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Anticipate"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonOvershoot"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Overshoot"
+            android:textSize="40sp"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonBounce"
+            android:textColor="@color/green"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:text="Bounce"
+            android:textSize="40sp"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <LinearLayout

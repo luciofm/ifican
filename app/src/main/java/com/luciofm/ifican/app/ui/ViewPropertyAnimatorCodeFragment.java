@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,11 +53,7 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/showlabel.java.html")));
-
-        image.setAlpha(0f);
-        image.setScaleX(0f);
-        image.setScaleY(0f);
+        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/vpanim.java.html")));
 
         currentStep = 1;
         return v;
@@ -66,10 +64,14 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
         switch (++currentStep) {
             case 2:
                 container.setVisibility(View.VISIBLE);
+                image.setVisibility(View.VISIBLE);
                 image.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
                         image.getViewTreeObserver().removeOnPreDrawListener(this);
+                        image.setAlpha(0f);
+                        image.setScaleX(0f);
+                        image.setScaleY(0f);
                         image.setPivotX(image.getX() / 2);
                         image.setPivotY(image.getY() / 2);
                         image.animate().alpha(1f).scaleY(1f).scaleX(1f)
@@ -80,7 +82,7 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
                                 image.setAlpha(1f);
                             }
                         });
-                        return true;
+                        return false;
                     }
                 });
                 break;

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="java">
+<meta name="settings" content="no_pre">
+</head>
+<body bgcolor="#808080" text="#ffffff">
+<font face="monospace">
+image.setVisibility(View.VISIBLE);<br>
+image.getViewTreeObserver()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.addOnPreDrawListener(<font color="#ffff00"><b>new</b></font>&nbsp;ViewTreeObserver.OnPreDrawListener()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#8080ff"><b>@Override</b></font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00ff00"><b>public</b></font>&nbsp;<font color="#00ff00"><b>boolean</b></font>&nbsp;onPreDraw()&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image.getViewTreeObserver()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.removeOnPreDrawListener(<font color="#00ff00"><b>this</b></font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;image.animate().alpha(<font color="#ff40ff"><b>1f</b></font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.scaleY(<font color="#ff40ff"><b>1f</b></font>).scaleX(<font color="#ff40ff"><b>1f</b></font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.rotation(<font color="#ff40ff"><b>720</b></font>)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.setInterpolator(<font color="#ffff00"><b>new</b></font>&nbsp;AccelerateInterpolator())<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.setDuration(<font color="#ff40ff"><b>1000</b></font>);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ffff00"><b>return</b></font>&nbsp;<font color="#ff40ff"><b>false</b></font>;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+});<br>
+</font>
+</body>
+</html>
