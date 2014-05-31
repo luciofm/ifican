@@ -42,8 +42,8 @@ public class MainActivity extends BaseActivity {
         fragments.add(AnimationListCodeFragment.class);
         fragments.add(ObjectAnimatorCodeFragment.class);
         fragments.add(ViewPropertyAnimatorCodeFragment.class);
-        fragments.add(MorphingButtonCodeFragment.class);
         fragments.add(ActivityTransitionsCodeFragment.class);
+        fragments.add(MorphingButtonCodeFragment.class);
         fragments.add(QuestionsFragment.class);
         fragments.add(TheEndFragment.class);
 

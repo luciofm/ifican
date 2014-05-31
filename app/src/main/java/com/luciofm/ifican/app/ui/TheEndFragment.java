@@ -48,6 +48,11 @@ public class TheEndFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onPrevPressed() {
+        getActivity().finish();
+    }
+
     @OnClick(R.id.container)
     public void onClick() {
         onNextPressed();

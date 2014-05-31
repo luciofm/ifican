@@ -1,0 +1,15 @@
+<LinearLayout
+    android:id="@+id/root">
+    <LinearLayout
+        android:id="@+id/registerForm">
+        <TextView android:id="@+id/registerTitle"/>
+        ...
+        <Button />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/loginForm">
+        <TextView android:id="@+id/loginTitle"/>
+        ...
+        <Button />
+    </LinearLayout>
+</LinearLayout>

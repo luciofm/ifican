@@ -6,10 +6,13 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
@@ -54,7 +57,10 @@ public class MorphingButtonCodeFragment extends BaseFragment {
     List<View> login;
 
     @InjectView(R.id.text2)
-    TextView text2;
+    TextSwitcher text2;
+
+    Spanned code1;
+    Spanned code2;
 
     private int currentStep;
 
@@ -70,8 +76,14 @@ public class MorphingButtonCodeFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/tm.java.html")));
+        code1 = Html.fromHtml(IOUtils.readFile(getActivity(), "source/morph.xml.html"));
+        code2 = Html.fromHtml(IOUtils.readFile(getActivity(), "source/tm.java.html"));
+        text2.setInAnimation(getActivity(), android.R.anim.fade_in);
+        text2.setOutAnimation(getActivity(), android.R.anim.fade_out);
+        text2.setText(code1);
+
         currentStep = 1;
+
         return v;
     }
 
@@ -99,9 +111,44 @@ public class MorphingButtonCodeFragment extends BaseFragment {
                 container2.setVisibility(View.GONE);
                 text2.setVisibility(View.VISIBLE);
                 break;
+            case 8:
+                text2.setText(code2);
+                break;
             default:
                 ((MainActivity) getActivity()).nextFragment();
         }
+    }
+
+    @Override
+    public void onPrevPressed() {
+        if (--currentStep > 0) {
+            if (currentStep == 7) {
+                text2.setText(code1);
+            } else if (currentStep > 1) {
+                Log.d("IfICan", "currentStep: " + currentStep);
+                AnimUtils.beginDelayedTransition(container3);
+                ButterKnife.apply(register, new ButterKnife.Action<View>() {
+                    @Override
+                    public void apply(View view, int i) {
+                        view.setVisibility(View.GONE);
+                    }
+                });
+                ButterKnife.apply(login, new ButterKnife.Action<View>() {
+                    @Override
+                    public void apply(View view, int i) {
+                        view.setVisibility(View.GONE);
+                    }
+                });
+                container2.setVisibility(View.VISIBLE);
+                text2.setVisibility(View.GONE);
+                currentStep = 1;
+            } else {
+                AnimUtils.beginDelayedTransition(root);
+                container2.setVisibility(View.GONE);
+            }
+            return;
+        }
+        super.onPrevPressed();
     }
 
     @OnClick(R.id.container)
