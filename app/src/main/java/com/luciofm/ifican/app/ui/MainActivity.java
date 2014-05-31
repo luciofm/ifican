@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        fragments.add(IfICanFragment.class);
+        /*fragments.add(IfICanFragment.class);
         fragments.add(WhyFragment.class);
         fragments.add(SoftTransitionsFragment.class);
         fragments.add(TransitionsExampleFragment.class);
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(ObjectAnimatorCodeFragment.class);
         fragments.add(ViewPropertyAnimatorCodeFragment.class);
         fragments.add(MorphingButtonCodeFragment.class);
-        fragments.add(ActivityTransitionsCodeFragment.class);
+        fragments.add(ActivityTransitionsCodeFragment.class);*/
         fragments.add(QuestionsFragment.class);
         fragments.add(TheEndFragment.class);
 

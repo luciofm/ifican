@@ -17,29 +17,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.util.Log;
 import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
-import com.luciofm.ifican.app.BuildConfig;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.AnimUtils;
 import com.luciofm.ifican.app.anim.LayerEnablingAnimatorListener;
 import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
-import com.luciofm.ifican.app.util.MutableForegroundColorSpan;
+import com.luciofm.ifican.app.util.AlphaSpan;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -63,7 +60,8 @@ public class QuestionsFragment extends BaseFragment {
     TextView text3;
     @InjectView(R.id.text4)
     TextView text4;
-    ObjectAnimator fireworks;
+
+    AnimatorSet fireworks;
 
     final private static float PROGRESS_TO_PIXELIZATION_FACTOR = 1000.0f;
 
@@ -125,7 +123,8 @@ public class QuestionsFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
-                fireworks.cancel();
+                if (fireworks != null)
+                    fireworks.cancel();
                 animateOut();
                 break;
             case 3:
@@ -139,7 +138,7 @@ public class QuestionsFragment extends BaseFragment {
                 image.setVisibility(View.VISIBLE);
                 image.animate().alpha(1f).setDuration(300);
                 ObjectAnimator pixalate = ObjectAnimator.ofInt(this, "pixalateFactor", 100, 0);
-                pixalate.setDuration(1200);
+                pixalate.setDuration(1600);
                 pixalate.start();
                 break;
             case 4:
@@ -162,95 +161,55 @@ public class QuestionsFragment extends BaseFragment {
     }
 
     private void animateTitle() {
-        FireworksSpanGroup spanGroup = buildFireworksSpanGroup(0, title.length() - 1);
-        fireworks = ObjectAnimator.ofFloat(spanGroup, FIREWORKS_GROUP_PROGRESS_PROPERTY, 0.0f, 1.0f);
-        fireworks.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                //refresh
-                if (isResumed())
-                    text1.setText(title);
-            }
-        });
-        fireworks.setInterpolator(new AccelerateDecelerateInterpolator());
-        fireworks.setDuration(3000);
+        buildFireworksAnimation(0, title.length() - 1);
+    }
+
+    private static final int FIREWORK_ANIM_DURATION = 1500;
+    private static final int FIREWORK_ANIM_DELAY = 240;
+    private int currentDelay = 0;
+
+    private void buildFireworksAnimation(int start, int end) {
+        ArrayList<AlphaSpan> spans = new ArrayList<>();
+        for(int index = start ; index <= end ; index++) {
+            AlphaSpan span = new AlphaSpan(0);
+            spans.add(span);
+            title.setSpan(span, index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        Collections.shuffle(spans);
+
+        List<Animator> animators = new ArrayList<>();
+        for (AlphaSpan span : spans) {
+            ObjectAnimator anim = ObjectAnimator.ofInt(span, ALPHA_SPAN_PROPERTY, 0, 255);
+            anim.setDuration(FIREWORK_ANIM_DURATION);
+            anim.setStartDelay(currentDelay);
+            animators.add(anim);
+            anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    if (isResumed())
+                        text1.setText(title);
+                }
+            });
+            currentDelay += FIREWORK_ANIM_DELAY;
+        }
+
+        fireworks = new AnimatorSet();
+        fireworks.playTogether(animators);
         fireworks.start();
     }
 
-    private FireworksSpanGroup buildFireworksSpanGroup(int start, int end) {
-        final FireworksSpanGroup group = new FireworksSpanGroup();
-        for(int index = start ; index <= end ; index++) {
-            MutableForegroundColorSpan span = new MutableForegroundColorSpan(0, 0xFF4E50);
-            group.addSpan(span);
-            title.setSpan(span, index, index + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        group.init();
-        return group;
-    }
-
-    private static final class FireworksSpanGroup {
-
-        private static final boolean DEBUG = BuildConfig.DEBUG;
-        private static final String TAG = "FireworksSpanGroup";
-
-        private final float mProgress;
-        private final ArrayList<MutableForegroundColorSpan> mSpans;
-        private final ArrayList<Integer> mSpanIndexes;
-
-        private FireworksSpanGroup() {
-            mProgress = 0;
-            mSpans = new ArrayList<MutableForegroundColorSpan>();
-            mSpanIndexes = new ArrayList<Integer>();
-        }
-
-        public void addSpan(MutableForegroundColorSpan span) {
-            span.setAlpha(0);
-            mSpanIndexes.add(mSpans.size());
-            mSpans.add(span);
-        }
-
-        public void init() {
-            Collections.shuffle(mSpans);
-        }
-
-        public void setProgress(float progress) {
-            int size = mSpans.size();
-            float total = 1.0f * size * progress;
-
-            if(DEBUG) Log.d(TAG, "progress " + progress + " * 1.0f * size => " + total);
-
-            for(int index = 0 ; index < size; index++) {
-                MutableForegroundColorSpan span = mSpans.get(index);
-
-                if(total >= 1.0f) {
-                    Log.d(TAG, "index: " + index + " alpha: 255 - total: " + total);
-                    span.setAlpha(255);
-                    total -= 1.0f;
-                } else {
-                    int alpha = (int) (total * 255);
-                    Log.d(TAG, "index: " + index + " alpha: " + alpha + " - total: " + total);
-                    span.setAlpha(alpha);
-                    total = 0.0f;
-                }
-            }
-        }
-
-        public float getProgress() {
-            return mProgress;
-        }
-    }
-
-    private static final Property<FireworksSpanGroup, Float> FIREWORKS_GROUP_PROGRESS_PROPERTY =
-            new Property<FireworksSpanGroup, Float>(Float.class, "FIREWORKS_GROUP_PROGRESS_PROPERTY") {
+    private static final Property<AlphaSpan, Integer> ALPHA_SPAN_PROPERTY =
+            new Property<AlphaSpan, Integer>(Integer.class, "ALPHA_SPAN_PROPERTY") {
 
                 @Override
-                public void set(FireworksSpanGroup spanGroup, Float value) {
-                    spanGroup.setProgress(value);
+                public void set(AlphaSpan span, Integer value) {
+                    span.setAlpha(value);
                 }
 
                 @Override
-                public Float get(FireworksSpanGroup spanGroup) {
-                    return spanGroup.getProgress();
+                public Integer get(AlphaSpan span) {
+                    return span.getAlpha();
                 }
             };
 
@@ -339,7 +298,6 @@ public class QuestionsFragment extends BaseFragment {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     public ViewPropertyAnimator animateViewsOut() {
         ArrayList<View> views = new ArrayList<>();
-        //ArrayList<Animator> animators = new ArrayList<>();
         ViewPropertyAnimator anim = null;
         for (int i = 0; i < container2.getChildCount(); i++) {
             View v = container2.getChildAt(i);

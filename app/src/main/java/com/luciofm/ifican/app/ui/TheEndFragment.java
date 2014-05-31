@@ -16,6 +16,7 @@ import com.luciofm.ifican.app.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class TheEndFragment extends BaseFragment {
@@ -45,5 +46,10 @@ public class TheEndFragment extends BaseFragment {
                 text1.setVisibility(View.GONE);
                 text2.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.container)
+    public void onClick() {
+        onNextPressed();
     }
 }
