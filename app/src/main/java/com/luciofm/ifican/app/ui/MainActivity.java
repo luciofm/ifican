@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(MorphingButtonCodeFragment.class);
         fragments.add(QuestionsFragment.class);
         fragments.add(TheEndFragment.class);
+        fragments.add(MinSdkFragment.class);
 
         if (savedInstanceState == null)
             nextFragment(false);
