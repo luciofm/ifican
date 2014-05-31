@@ -96,7 +96,7 @@ public class MorphingButtonCodeFragment extends BaseFragment {
                 break;
             case 7:
                 AnimUtils.beginDelayedTransition(root);
-                container3.setVisibility(View.GONE);
+                container2.setVisibility(View.GONE);
                 text2.setVisibility(View.VISIBLE);
                 break;
             default:

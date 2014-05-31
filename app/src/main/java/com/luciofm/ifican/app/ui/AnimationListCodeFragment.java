@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * A simple {@link android.app.Fragment} subclass.
  *
  */
-public class AnimationDrawableCodeFragment extends BaseFragment {
+public class AnimationListCodeFragment extends BaseFragment {
 
     @InjectView(R.id.container2)
     View container;
@@ -36,7 +36,7 @@ public class AnimationDrawableCodeFragment extends BaseFragment {
 
     private int currentStep;
 
-    public AnimationDrawableCodeFragment() {
+    public AnimationListCodeFragment() {
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AnimationDrawableCodeFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/showlabel.java.html")));
+        text2.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/list.xml.html")));
         currentStep = 1;
         return v;
     }
@@ -71,7 +71,7 @@ public class AnimationDrawableCodeFragment extends BaseFragment {
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_animation_drawable_code;
+        return R.layout.fragment_animation_list_code;
     }
 
     @Override

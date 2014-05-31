@@ -39,7 +39,7 @@ public class TransitionActivity extends BaseActivity {
 
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
     private static final TimeInterpolator sAccelerator = new AccelerateInterpolator();
-    private static final int ANIM_DURATION = 500;
+    private static final int ANIM_DURATION = 800;
 
     @InjectView(R.id.toplevel)
     FrameLayout topLevel;
