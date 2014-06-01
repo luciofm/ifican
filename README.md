@@ -7,4 +7,6 @@ Esse aplicativo foi feito exclusivamente para tablets 10 polegadas (pretendo oti
 
 Minha sugestão, se você não tem um tablet 10" com KikKat, é usar o [genymotion.com](http://genymotion.com)
 
+Também é possível assistir o [screencast dos "slides"](https://www.youtube.com/watch?v=j0LQmyNrIKU)
+
 
