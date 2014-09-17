@@ -13,6 +13,8 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class Utils {
 
+    private static final int ANIM_DURATION = 800;
+
     private Utils() {
     }
 
@@ -63,5 +65,21 @@ public class Utils {
                 view.dispatchTouchEvent(motionEvent);
             }
         }, duration);
+    }
+
+    public static long calcDuration(int position) {
+        int pos = position;
+        if (pos >= 4)
+            pos -= 4;
+        switch (pos) {
+            case 1:
+                return (long) (ANIM_DURATION + (ANIM_DURATION * 0.2f));
+            case 2:
+                return (long) (ANIM_DURATION + (ANIM_DURATION * 0.3f));
+            case 3:
+                return (long) (ANIM_DURATION + (ANIM_DURATION * 0.4f));
+            default:
+                return ANIM_DURATION;
+        }
     }
 }

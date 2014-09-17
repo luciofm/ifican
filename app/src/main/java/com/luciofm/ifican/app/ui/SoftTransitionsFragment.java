@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
@@ -42,6 +43,9 @@ public class SoftTransitionsFragment extends BaseFragment {
     int pink;
     int green;
     int soft_pink;
+
+    ViewInfo info;
+    Handler handler = new Handler();
 
     public SoftTransitionsFragment() {
     }
@@ -103,14 +107,21 @@ public class SoftTransitionsFragment extends BaseFragment {
 
     @OnClick(R.id.text2)
     public void onTextClick(View v) {
-        ViewInfo info = new ViewInfo(v);
-
-        Bundle args = new Bundle();
-        args.putParcelable(ViewInfo.VIEW_INFO, info);
-
-        text2.setBackgroundColor(soft_pink);
-        ((MainActivity) getActivity()).nextFragment(args);
+        info = new ViewInfo(v, 0);
+        text1.animate().alpha(0).setDuration(200);
+        handler.postDelayed(nextFragment, 200);
     }
+
+    Runnable nextFragment = new Runnable() {
+        @Override
+        public void run() {
+            Bundle args = new Bundle();
+            args.putParcelable(ViewInfo.VIEW_INFO, info);
+
+            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
+            ((MainActivity) getActivity()).nextFragment(args);
+        }
+    };
 
     @Override
     public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,15 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.luciofm.ifican.app.BaseFragment;
+import com.luciofm.ifican.app.IfICan;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.XFractionProperty;
 import com.luciofm.ifican.app.anim.YFractionProperty;
+import com.luciofm.ifican.app.util.ActivityFinishEvent;
 import com.luciofm.ifican.app.util.Dog;
 import com.luciofm.ifican.app.util.Utils;
 import com.luciofm.ifican.app.util.ViewInfo;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +50,9 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
 
     private int currentStep;
 
+    private View currentView;
+    private int currentPosition = -1;
+
     public ActivityTransitionsCodeFragment() {
     }
 
@@ -62,6 +69,8 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
         dogs.add(new Dog(R.drawable.dog8, "dog8"));
         dogs.add(new Dog(R.drawable.dog9, "dog9"));
         dogs.add(new Dog(R.drawable.dog10, "dog10"));
+
+        IfICan.getBusInstance().register(this);
     }
 
     @Override
@@ -83,6 +92,12 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
     }
 
     @Override
+    public void onDestroy() {
+        IfICan.getBusInstance().unregister(this);
+        super.onDestroy();
+    }
+
+    @Override
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
@@ -100,7 +115,10 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Dog dog = (Dog) view.getTag();
-            ViewInfo info = new ViewInfo(view);
+            ViewInfo info = new ViewInfo(view, position);
+            currentView = view;
+            currentView.animate().alpha(0f).setDuration(50);
+            currentPosition = position;
 
             Intent intent = new Intent(getActivity(), TransitionActivity.class);
             intent.putExtra("DOG", dog);
@@ -109,6 +127,16 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
             getActivity().overridePendingTransition(0, 0);
         }
     };
+
+    @Subscribe
+    public void onActivityFinishedEvent(ActivityFinishEvent event) {
+        if (currentView != null) {
+            currentView.setAlpha(0f);
+            currentView.animate().alpha(1f)
+                    .setStartDelay(Utils.calcDuration(currentPosition) - 300)
+                    .setDuration(350);
+        }
+    }
 
     @OnClick(R.id.container)
     public void onClick() {

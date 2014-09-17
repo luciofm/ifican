@@ -2,12 +2,14 @@ package com.luciofm.ifican.app.ui;
 
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.Fragment;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -97,12 +99,13 @@ public class TransitionsExampleFragment extends BaseFragment {
                 text1.setTranslationX(leftDelta);
                 text1.setTranslationY(topDelta);
 
-                new Handler().postDelayed(new Runnable() {
+                runEnterAnimation();
+                /*new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         runEnterAnimation();
                     }
-                }, 400);
+                }, 500);*/
                 return false;
             }
         });
@@ -164,18 +167,17 @@ public class TransitionsExampleFragment extends BaseFragment {
         ObjectAnimator background = ObjectAnimator.ofObject(container, "backgroundColor",
                                                             new ArgbEvaluator(), green,
                                                             pink).setDuration(500);
-        ObjectAnimator textBackground = ObjectAnimator.ofObject(text1, "backgroundColor",
-                                                                new ArgbEvaluator(), soft_pink,
-                                                                green).setDuration(500);
-        AnimatorSet set = new AnimatorSet();
-        set.playTogether(background, textBackground);
-        set.start();
-
+        background.start();
         /* Translate text1 to its current (R.layout.fragment_transitions_example) position */
         text1.animate().setDuration(500)
                 .translationX(0)
                 .translationY(0)
-                .setInterpolator(sDecelerator);
+                .setInterpolator(sDecelerator).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.pink)));
+            }
+        });
     }
 
     @OnClick({R.id.gif1, R.id.gif2})

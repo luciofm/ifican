@@ -3,9 +3,12 @@ package com.luciofm.ifican.app.ui;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.graphics.ColorMatrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -14,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,8 +28,10 @@ import com.luciofm.ifican.app.IfICan;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.LayerEnablingAnimatorListener;
 import com.luciofm.ifican.app.anim.SimpleAnimatorListener;
+import com.luciofm.ifican.app.util.ActivityFinishEvent;
 import com.luciofm.ifican.app.util.Dog;
 import com.luciofm.ifican.app.util.IOUtils;
+import com.luciofm.ifican.app.util.Utils;
 import com.luciofm.ifican.app.util.ViewInfo;
 
 import butterknife.ButterKnife;
@@ -39,6 +45,7 @@ public class TransitionActivity extends BaseActivity {
 
     private static final TimeInterpolator sDecelerator = new DecelerateInterpolator();
     private static final TimeInterpolator sAccelerator = new AccelerateInterpolator();
+    private static final TimeInterpolator interpolator = new AnticipateOvershootInterpolator();
     private static final int ANIM_DURATION = 800;
 
     @InjectView(R.id.toplevel)
@@ -111,7 +118,9 @@ public class TransitionActivity extends BaseActivity {
     }
 
     private void runEnterAnimation() {
-        final long duration = (long) (ANIM_DURATION);
+        final long duration = Utils.calcDuration(info.position);
+
+        Log.d("IfICan", "Duration: " + duration);
 
         // Set starting values for properties we're going to animate. These
         // values scale and position the full size version down to the thumbnail
@@ -123,14 +132,13 @@ public class TransitionActivity extends BaseActivity {
         image.setTranslationX(leftDelta);
         image.setTranslationY(topDelta);
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 image.animate().setDuration(duration)
                         .scaleX(1).scaleY(1)
                         .translationX(0).translationY(0)
-                        .setInterpolator(sDecelerator)
+                        .setInterpolator(interpolator)
                         .setListener(new LayerEnablingAnimatorListener(image) {
                             @Override
                             public void onAnimationEnd(Animator animation) {
@@ -215,13 +223,14 @@ public class TransitionActivity extends BaseActivity {
     }
 
     public void animateOut(View text) {
-        final long duration = (long) (ANIM_DURATION);
+        final long duration = Utils.calcDuration(info.position);
 
         // First, slide/fade text out of the way
         text.animate().translationY(text.getHeight())
-                .alpha(0).setDuration(duration / 2)
+                .alpha(0).setDuration(ANIM_DURATION / 2)
                 .setInterpolator(sAccelerator)
                 .setListener(new SimpleAnimatorListener() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         image.animate().setDuration(duration)
@@ -229,6 +238,7 @@ public class TransitionActivity extends BaseActivity {
                                 .scaleY(heightScale)
                                 .translationX(leftDelta)
                                 .translationY(topDelta)
+                                .setInterpolator(interpolator)
                                 .setListener(new LayerEnablingAnimatorListener(image) {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
@@ -240,6 +250,7 @@ public class TransitionActivity extends BaseActivity {
                         ObjectAnimator bgAnim = ObjectAnimator.ofInt(background, "alpha", 0);
                         bgAnim.setDuration(duration);
                         bgAnim.start();
+                        IfICan.getBusInstance().post(new ActivityFinishEvent());
                     }
                 });
     }

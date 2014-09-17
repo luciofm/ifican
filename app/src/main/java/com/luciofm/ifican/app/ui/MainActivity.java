@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.ViewStub;
 
 import com.luciofm.ifican.app.BaseActivity;
 import com.luciofm.ifican.app.BaseFragment;

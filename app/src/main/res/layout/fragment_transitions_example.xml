@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:textColor="@color/pink"
-        android:background="@color/soft_pink"
+        android:background="@color/green"
         app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
 
     <LinearLayout

@@ -11,8 +11,9 @@ public class ViewInfo implements Parcelable {
     public int width;
     public int height;
     public int orientation;
+    public int position;
 
-    public ViewInfo(View v) {
+    public ViewInfo(View v, int position) {
         int[] screenLocation = new int[2];
         v.getLocationOnScreen(screenLocation);
         left = screenLocation[0];
@@ -20,17 +21,19 @@ public class ViewInfo implements Parcelable {
         width = v.getWidth();
         height = v.getHeight();
         orientation = v.getResources().getConfiguration().orientation;
+        this.position = position;
     }
 
     @Override
     public String toString() {
         return "ViewInfo{" +
-               "left=" + left +
-               ", top=" + top +
-               ", width=" + width +
-               ", height=" + height +
-               ", orientation=" + orientation +
-               '}';
+                "left=" + left +
+                ", top=" + top +
+                ", width=" + width +
+                ", height=" + height +
+                ", orientation=" + orientation +
+                ", position=" + position +
+                '}';
     }
 
     @Override
@@ -45,6 +48,7 @@ public class ViewInfo implements Parcelable {
         dest.writeInt(this.width);
         dest.writeInt(this.height);
         dest.writeInt(this.orientation);
+        dest.writeInt(this.position);
     }
 
     public ViewInfo(Parcel in) {
@@ -53,6 +57,7 @@ public class ViewInfo implements Parcelable {
         this.width = in.readInt();
         this.height = in.readInt();
         this.orientation = in.readInt();
+        this.position = in.readInt();
     }
 
     public static Creator<ViewInfo> CREATOR = new Creator<ViewInfo>() {
