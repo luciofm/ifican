@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.R;
@@ -25,16 +26,19 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class FeedbackFragment extends BaseFragment {
 
+    @InjectView(R.id.container)
+    ViewGroup container;
+
     @InjectView(R.id.container2)
     SquareGridLayout container2;
-    //@InjectView(R.id.gif1)
+    @InjectView(R.id.text1)
+    TextView text1;
+
     GifImageView gif1;
-    //@InjectView(R.id.gif2)
     GifImageView gif2;
-    //@InjectView(R.id.gif3)
     GifImageView gif3;
-    //@InjectView(R.id.gif4)
     GifImageView gif4;
+
     @InjectView(R.id.gif5)
     GifImageView gif5;
 
@@ -63,10 +67,12 @@ public class FeedbackFragment extends BaseFragment {
             GifDrawable gifFromResource;
             GifImageView gif = new GifImageView(getActivity());
             gif.setOnClickListener(clickListener);
-            ViewGroup.LayoutParams params = new SquareGridLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                                                              getResources().getDimensionPixelSize(R.dimen.grid_heiht));
+
+            ViewGroup.LayoutParams params = new SquareGridLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    getResources().getDimensionPixelSize(R.dimen.grid_heiht));
             switch (++currentStep) {
                 case 2:
+                    text1.animate().scaleY(0.6f).scaleX(0.6f);
                     container2.setVisibility(View.VISIBLE);
                     gifFromResource = new GifDrawable(getResources(), R.drawable.feedback1);
                     gif.setImageDrawable(gifFromResource);
@@ -99,8 +105,9 @@ public class FeedbackFragment extends BaseFragment {
                     container2.addView(gif4, 0, params);
                     break;
                 case 6:
-                    container2.setVisibility(View.GONE);
-                    gif5.setVisibility(View.VISIBLE);
+                    animateOut();
+                    /*container2.setVisibility(View.GONE);
+                    gif5.setVisibility(View.VISIBLE);*/
                     break;
                 case 7:
                     container2.removeAllViews();
@@ -109,6 +116,46 @@ public class FeedbackFragment extends BaseFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void animateOut() {
+        container.getOverlay().add(gif1);
+        container.getOverlay().add(gif2);
+        container.getOverlay().add(gif3);
+        container.getOverlay().add(gif4);
+
+        int[] p = new int[2];
+        gif4.getLocationOnScreen(p);
+        gif4.animate().translationX(-(p[0] + gif4.getWidth())).translationY(-(p[1] + gif4.getHeight()));
+
+        gif3.getLocationOnScreen(p);
+        gif3.animate().translationX(p[0] + gif3.getWidth()).translationY(-(p[1] + gif3.getHeight()));
+
+        gif2.getLocationOnScreen(p);
+        gif2.animate().translationX(-(p[0] + gif2.getWidth())).translationY((p[1] + gif2.getHeight()));
+
+        gif1.getLocationOnScreen(p);
+        gif1.animate().translationX(p[0] + gif1.getWidth())
+                .translationY(p[1] + gif1.getHeight()).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                if (!isAdded() || isDetached() || isRemoving() || !isResumed() || !isVisible())
+                    return;
+                container2.setVisibility(View.GONE);
+                container2.removeAllViews();
+                gif5.setVisibility(View.VISIBLE);
+
+                container.getOverlay().remove(gif1);
+                container.getOverlay().remove(gif2);
+                container.getOverlay().remove(gif3);
+                container.getOverlay().remove(gif4);
+
+                container2.addView(gif1, 0);
+                container2.addView(gif2, 0);
+                container2.addView(gif3, 0);
+                container2.addView(gif4, 0);
+            }
+        });
     }
 
     @Override
@@ -122,10 +169,16 @@ public class FeedbackFragment extends BaseFragment {
             if (currentStep == 5)
                 position = 5;
             switch (position) {
+                case 0:
+                    Utils.stopGif(gif);
+                    container2.setVisibility(View.GONE);
+                    text1.animate().scaleY(1f).scaleX(1f);
+                    container2.removeViewAt(0);
+                    break;
                 case 1:
                     Utils.stopGif(gif);
-                    container2.setVisibility(View.VISIBLE);
                     container2.removeViewAt(0);
+                    Utils.startGif((GifImageView) container2.getChildAt(position - 1));
                     break;
                 case 2:
                     Utils.stopGif(gif);
@@ -137,20 +190,31 @@ public class FeedbackFragment extends BaseFragment {
                     container2.removeViewAt(0);
                     Utils.startGif((GifImageView) container2.getChildAt(position - 1));
                     break;
-                case 4:
-                    Utils.stopGif(gif);
-                    container2.removeViewAt(0);
-                    Utils.startGif((GifImageView) container2.getChildAt(position - 1));
-                    break;
                 case 5:
-                    gif5.setVisibility(View.GONE);
+                    /*gif5.setVisibility(View.GONE);
                     container2.setVisibility(View.VISIBLE);
-                    Utils.startGif(gif);
+                    currentStep = 1;*/
+                    animateBack(gif);
                     break;
             }
             return;
         }
         super.onPrevPressed();
+    }
+
+    private void animateBack(final GifImageView gif) {
+        gif5.setVisibility(View.GONE);
+        container2.setVisibility(View.VISIBLE);
+        gif1.animate().translationX(0f).translationY(0f);
+        gif2.animate().translationX(0f).translationY(0f);
+        gif3.animate().translationX(0f).translationY(0f);
+        gif4.animate().translationX(0f).translationY(0f).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                if (gif != null)
+                    Utils.startGif(gif);
+            }
+        });
     }
 
     @OnClick(R.id.container)
@@ -177,6 +241,6 @@ public class FeedbackFragment extends BaseFragment {
 
         //Target will be filled in by the framework
         return enter ? ObjectAnimator.ofFloat(null, new XFractionProperty(), 1f, 0f)
-                       : ObjectAnimator.ofFloat(null, new YFractionProperty(), 0f, -1f);
+                : ObjectAnimator.ofFloat(null, new YFractionProperty(), 0f, -1f);
     }
 }

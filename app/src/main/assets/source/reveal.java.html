@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="java">
+<meta name="settings" content="no_pre">
+</head>
+<body bgcolor="#000000" text="#ffffff">
+<font face="monospace">
+<br>
+&nbsp;<font color="#00ff00"><b>public</b></font>&nbsp;<font color="#00ff00"><b>void</b></font>&nbsp;revealCode(View view)&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;<font color="#00ff00"><b>int</b></font>&nbsp;cx =&nbsp;(view.getLeft()&nbsp;+ view.getRight())&nbsp;/&nbsp;<font color="#ff40ff"><b>2</b></font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#00ff00"><b>int</b></font>&nbsp;cy =&nbsp;(view.getTop()&nbsp;+ view.getBottom())&nbsp;/&nbsp;<font color="#ff40ff"><b>2</b></font>;<br>
+&nbsp;&nbsp;&nbsp;<font color="#00ff00"><b>float</b></font>&nbsp;radius = text2.getWidth();<br>
+<br>
+&nbsp;&nbsp; text2.setVisibility(View.VISIBLE);<br>
+<br>
+&nbsp;&nbsp; ViewAnimationUtils<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.createCircularReveal(text2, cx, cy,&nbsp;<font color="#ff40ff"><b>0</b></font>, radius).start();<br>
+&nbsp;}<br>
+</font>
+</body>
+</html>

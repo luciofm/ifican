@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(CodeFragment.class);
         fragments.add(LayoutTransitionsCodeFragment.class);
         fragments.add(TouchFeedbackCodeFragment.class);
+        fragments.add(RevealCodeFragment.class);
         fragments.add(AnimationListCodeFragment.class);
         fragments.add(ObjectAnimatorCodeFragment.class);
         fragments.add(ViewPropertyAnimatorCodeFragment.class);
@@ -108,19 +109,36 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event);
+        Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event.getScanCode());
         BaseFragment fragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
-        if (keyCode == 0) {
+        //if (keyCode == 0 || keyCode == 62 || keyCode == 82) {
             int scanCode = event.getScanCode();
             switch (scanCode) {
                 case IfICan.BUTTON_NEXT:
+                case 28:
+                case 229:
+                case 0x74:
                     fragment.onNextPressed();
-                    break;
+                    return true;
                 case IfICan.BUTTON_PREV:
+                case 0x79:
+                case 57:
                     fragment.onPrevPressed();
-                    break;
+                    return true;
             }
-        }
+        //}
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.d("IFICAN", "onKeyUp: " + keyCode + " - event: " + event.getScanCode());
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {
+        Log.d("IFICAN", "onKeyMultiple: " + keyCode + " - event: " + event.getScanCode());
+        return super.onKeyMultiple(keyCode, repeatCount, event);
     }
 }

@@ -70,6 +70,7 @@ public class AtentionFragment extends BaseFragment {
             case 2:
                 gif1.setVisibility(View.VISIBLE);
                 container2.setVisibility(View.VISIBLE);
+                text1.animate().scaleX(0.6f).scaleY(0.6f);
                 break;
             case 3:
                 gif1.performClick();

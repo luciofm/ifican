@@ -1,9 +1,12 @@
 package com.luciofm.ifican.app.util;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
@@ -39,8 +42,8 @@ public class Utils {
     public static void dispatchTouch(final View view, final long duration) {
         final long downTime = SystemClock.uptimeMillis();
         final long eventTime = SystemClock.uptimeMillis();
-        final float x = 0.0f;
-        final float y = 0.0f;
+        final float x = view.getWidth() / 3;//0.0f;
+        final float y = view.getHeight() / 3;//0.0f;
         // List of meta states found here: developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
         final int metaState = 0;
         MotionEvent motionEvent = MotionEvent.obtain(downTime,
@@ -81,5 +84,67 @@ public class Utils {
             default:
                 return ANIM_DURATION;
         }
+    }
+
+    /**
+     * Returns a valid DisplayMetrics object
+     *
+     * @param context valid context
+     * @return DisplayMetrics object
+     */
+    public static DisplayMetrics getDisplayMetrics(final Context context) {
+        final WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        final DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        return metrics;
+    }
+
+    /**
+     * Get the current device physical size in inches.
+     *
+     * @param context valid context.
+     * @return <b>double</b> device inches
+     */
+    public static double getDeviceDiagonalSizeInInches(final Context context) {
+        final DisplayMetrics metrics = getDisplayMetrics(context);
+
+        final double xInches = (double) metrics.widthPixels / metrics.xdpi;
+        final double yInches = (double) metrics.heightPixels / metrics.ydpi;
+        return Math.sqrt(Math.pow(xInches, 2) + Math.pow(yInches, 2));
+    }
+
+    /**
+     * Get the current device physical display density.
+     *
+     * @param context valid context.
+     * @return <b>int</b> with DENSITY_LOW, DENSITY_MEDIUM, DENSITY_TV, DENSITY_HIGH, DENSITY_XHIGH,
+     * DENSITY_XXHIGH
+     */
+    public static int getDisplayDensity(final Context context) {
+        // return (double)DisplayMetrics.DENSITY_DEFAULT * getDisplayMetrics(context).density;
+        return getDisplayMetrics(context).densityDpi;
+    }
+
+    public static int dpToPx(final Context context, final float dp) {
+        // Took from http://stackoverflow.com/questions/8309354/formula-px-to-dp-dp-to-px-android
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) ((dp * scale) + 0.5f);
+    }
+
+    public static int pxToDp(final Context context, final float px) {
+        final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return (int) ((px / displayMetrics.density) + 0.5);
+    }
+
+    public static int getScreenWidth(final Context context) {
+        if (context == null)
+            return 0;
+        return getDisplayMetrics(context).widthPixels;
+    }
+
+    public static int getScreenHeight(final Context context) {
+        if (context == null)
+            return 0;
+        return getDisplayMetrics(context).heightPixels;
     }
 }

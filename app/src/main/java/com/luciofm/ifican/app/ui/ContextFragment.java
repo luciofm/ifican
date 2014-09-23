@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.R;
@@ -26,6 +27,8 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class ContextFragment extends BaseFragment {
 
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.gif1)
     GifImageView gif1;
     @InjectView(R.id.container2)
@@ -54,6 +57,7 @@ public class ContextFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
+                text1.animate().scaleX(0.7f).scaleY(0.7f);
                 gif1.setVisibility(View.VISIBLE);
                 container2.setVisibility(View.VISIBLE);
                 break;

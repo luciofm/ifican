@@ -13,4 +13,20 @@
     <color name="soft_green">#77E1F5C4</color>
     <color name="soft_gray">#70202020</color>
     <color name="soft_black">#C0000000</color>
+    <color name="gray">#202020</color>
+
+    <color name="primary">#3f51b5</color>
+    <color name="primary_dark">#303f9f</color>
+    <color name="accent_blue">#03a9f4</color>
+    <color name="accent_blue_transparent">#A003a9f4</color>
+    <color name="accent_blue_50">#e1f5fe</color>
+    <color name="accent_blue_50_transparent">#E0e1f5fe</color>
+    <color name="accent_blue_100">#b3e5fc</color>
+    <color name="accent_pink">#e91e63</color>
+    <color name="accent_pink_50">#fce4ec</color>
+    <color name="accent_pink_100">#f8bbd0</color>
+
+    <color name="text_light">#FFFFFF</color>
+
+    <color name="color_light">#fafafa</color>
 </resources>

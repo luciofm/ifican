@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/yellow"
+    android:background="@color/accent_blue_100"
     android:animateLayoutChanges="true"
     android:id="@+id/container"
     android:clickable="true"
@@ -14,14 +14,13 @@
 
     <com.luciofm.ifican.app.widget.TextView
         android:id="@+id/text1"
-        android:layout_marginTop="40dp"
         android:text="Manter o Contexto"
         android:gravity="center"
-        android:textSize="120sp"
+        android:textSize="@dimen/text_title_really_big"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:textColor="@color/pink"
+        android:textColor="@color/accent_pink"
         app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
 
     <LinearLayout
@@ -29,25 +28,17 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:animateLayoutChanges="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/padding"
         android:id="@+id/container2"
         android:visibility="gone"
         android:gravity="center">
 
         <pl.droidsonroids.gif.GifImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/gif1"
             android:visibility="gone"
             tools:visibility="visible"
             android:src="@drawable/context1" />
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="160dp"
-            android:id="@+id/gif2"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:src="@drawable/attention2" />
     </LinearLayout>
 </LinearLayout>

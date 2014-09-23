@@ -6,7 +6,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/pink</item>
+        <item name="android:windowBackground">@color/accent_blue_50</item>
     </style>
 
     <style name="AppTheme.Transparent" parent="AppTheme">
@@ -18,5 +18,25 @@
         <item name="android:textColor">@color/pink</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextShadow">
+        <item name="android:shadowColor">@color/soft_black</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowRadius">1.5</item>
+    </style>
+
+    <style name="BaseTextCode">
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:fontFamily">monospace</item>
+    </style>
+
+    <style name="TextCode" parent="BaseTextCode">
+        <item name="android:background">@color/gray</item>
     </style>
 </resources>

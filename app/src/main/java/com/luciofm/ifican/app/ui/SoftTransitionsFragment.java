@@ -62,8 +62,8 @@ public class SoftTransitionsFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        pink = getResources().getColor(R.color.pink);
-        soft_pink = getResources().getColor(R.color.soft_pink);
+        pink = getResources().getColor(R.color.accent_pink);
+        soft_pink = getResources().getColor(R.color.accent_blue_50);
         green = getResources().getColor(R.color.green);
         currentStep = 1;
         new Handler().postDelayed(new Runnable() {
@@ -96,12 +96,14 @@ public class SoftTransitionsFragment extends BaseFragment {
     private void animateColor() {
         ObjectAnimator background = ObjectAnimator.ofObject(container, "backgroundColor",
                                                             new ArgbEvaluator(), pink,
-                                                            green).setDuration(500);
+                                                            soft_pink).setDuration(500);
         ObjectAnimator textColor = ObjectAnimator.ofObject(text1, "textColor",
                                                            new ArgbEvaluator(), pink,
-                                                           green).setDuration(500);
+                                                           soft_pink).setDuration(500);
+        ObjectAnimator elevation = ObjectAnimator.ofFloat(text1, "elevation", 0f, 4f).setDuration(800);
+
         AnimatorSet set = new AnimatorSet();
-        set.playTogether(background, textColor);
+        set.playTogether(background, textColor, elevation);
         set.start();
     }
 
@@ -118,7 +120,7 @@ public class SoftTransitionsFragment extends BaseFragment {
             Bundle args = new Bundle();
             args.putParcelable(ViewInfo.VIEW_INFO, info);
 
-            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.green)));
+            getActivity().getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.accent_pink_50)));
             ((MainActivity) getActivity()).nextFragment(args);
         }
     };

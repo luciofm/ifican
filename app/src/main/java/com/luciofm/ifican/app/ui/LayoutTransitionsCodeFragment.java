@@ -31,6 +31,8 @@ import butterknife.OnClick;
  */
 public class LayoutTransitionsCodeFragment extends BaseFragment {
 
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.textSwitcher)
     TextSwitcher textSwitcher;
 
@@ -68,6 +70,7 @@ public class LayoutTransitionsCodeFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
+                text1.animate().scaleY(0.7f).scaleX(0.7f);
                 textSwitcher.setVisibility(View.VISIBLE);
                 textSwitcher.setText(code1);
                 break;
@@ -84,6 +87,7 @@ public class LayoutTransitionsCodeFragment extends BaseFragment {
         if (--currentStep > 0) {
             switch (currentStep) {
                 case 1:
+                    text1.animate().scaleX(1f).scaleY(1f);
                     textSwitcher.setVisibility(View.GONE);
                     break;
                 case 2:

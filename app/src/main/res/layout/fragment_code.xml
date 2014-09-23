@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/yellow"
+    android:background="@color/accent_blue"
     android:animateLayoutChanges="true"
     android:gravity="center"
     android:id="@+id/container"
@@ -17,11 +17,12 @@
         android:text="Talk is cheap.\nShow me the Code."
         android:textAllCaps="true"
         android:gravity="left"
-        android:textSize="110sp"
+        android:textSize="@dimen/text_title_really_big"
         android:layout_gravity="center_horizontal|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pink"
+        android:textColor="@color/accent_pink"
+        style="@style/TextShadow"
         app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
 
 </LinearLayout>
