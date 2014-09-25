@@ -3,7 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/green"
+             android:background="@color/accent_blue"
              android:animateLayoutChanges="true"
              android:id="@+id/container"
              tools:context="com.luciofm.ifican.app.ui.QuestionsFragment">
@@ -15,8 +15,9 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/pink"
-        android:text="github.com/luciofm/ifican"
+        android:textColor="@color/accent_pink"
+        style="@style/TextShadow"
+        android:text="github.com/luciofm/qconrio"
         app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
 
     <com.luciofm.ifican.app.widget.TextView
@@ -26,7 +27,8 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/pink"
+        android:textColor="@color/accent_pink"
+        style="@style/TextShadow"
         android:text="The End..."
         android:visibility="gone"
         app:typeFace="YanoneKaffeesatz-Bold.ttf"/>

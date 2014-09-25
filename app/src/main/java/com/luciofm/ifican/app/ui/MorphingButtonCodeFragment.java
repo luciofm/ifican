@@ -56,6 +56,8 @@ public class MorphingButtonCodeFragment extends BaseFragment {
     @InjectViews({R.id.editLog1, R.id.editLog2, R.id.buttonLog1})
     List<View> login;
 
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.text2)
     TextSwitcher text2;
 
@@ -91,27 +93,29 @@ public class MorphingButtonCodeFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
+                text1.animate().scaleX(0.6f).scaleY(0.6f);
                 AnimUtils.beginDelayedTransition(root);
                 container2.setVisibility(View.VISIBLE);
                 break;
-            case 3:
+            /*case 3:
                 Utils.dispatchTouch(login_container);
                 break;
             case 4:
                 Utils.dispatchTouch(reg_container);
                 break;
             case 5:
-                Utils.dispatchTouch(buttonReg);
-                break;
-            case 6:
                 Utils.dispatchTouch(login_container);
                 break;
-            case 7:
+            case 6:
+                Utils.dispatchTouch(reg_container);
+                break;
+            case 7:*/
+            case 3:
                 AnimUtils.beginDelayedTransition(root);
                 container2.setVisibility(View.GONE);
                 text2.setVisibility(View.VISIBLE);
                 break;
-            case 8:
+            case 4:
                 text2.setText(code2);
                 break;
             default:
@@ -122,7 +126,7 @@ public class MorphingButtonCodeFragment extends BaseFragment {
     @Override
     public void onPrevPressed() {
         if (--currentStep > 0) {
-            if (currentStep == 7) {
+            if (currentStep == 3) {
                 text2.setText(code1);
             } else if (currentStep > 1) {
                 Log.d("IfICan", "currentStep: " + currentStep);
@@ -143,6 +147,7 @@ public class MorphingButtonCodeFragment extends BaseFragment {
                 text2.setVisibility(View.GONE);
                 currentStep = 1;
             } else {
+                text1.animate().scaleX(1f).scaleY(1f);
                 AnimUtils.beginDelayedTransition(root);
                 container2.setVisibility(View.GONE);
             }

@@ -31,6 +31,8 @@ public class AnimationListCodeFragment extends BaseFragment {
     View container;
     @InjectView(R.id.image)
     ImageView image;
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.text2)
     TextView text2;
 
@@ -55,9 +57,11 @@ public class AnimationListCodeFragment extends BaseFragment {
         switch (++currentStep) {
             case 2:
                 container.setVisibility(View.VISIBLE);
+                text1.animate().scaleX(0.6f).scaleY(0.6f);
                 break;
             case 3:
                 text2.setVisibility(View.VISIBLE);
+                image.animate().scaleX(0.6f).scaleY(0.6f);
                 break;
             default:
                 ((MainActivity) getActivity()).nextFragment();

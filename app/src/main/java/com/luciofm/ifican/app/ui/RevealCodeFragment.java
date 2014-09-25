@@ -4,6 +4,7 @@ package com.luciofm.ifican.app.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Outline;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.R;
+import com.luciofm.ifican.app.anim.XFractionProperty;
 import com.luciofm.ifican.app.util.IOUtils;
 import com.luciofm.ifican.app.util.Utils;
 
@@ -117,6 +119,17 @@ public class RevealCodeFragment extends BaseFragment {
             });
             reveal.start();
         }
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (transit == 0) {
+            return null;
+        }
+
+        //Target will be filled in by the framework
+        return enter ? ObjectAnimator.ofFloat(null, new XFractionProperty(), 1f, 0f)
+                : ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
     }
 
     @Override

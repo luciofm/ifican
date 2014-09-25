@@ -16,7 +16,7 @@ import pl.droidsonroids.gif.GifImageView;
  */
 public class Utils {
 
-    private static final int ANIM_DURATION = 800;
+    public static final int ANIM_DURATION = 800;
 
     private Utils() {
     }

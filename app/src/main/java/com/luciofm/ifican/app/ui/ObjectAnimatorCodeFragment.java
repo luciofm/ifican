@@ -4,6 +4,8 @@ package com.luciofm.ifican.app.ui;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.PathInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +48,10 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
     View container2;
     @InjectView(R.id.container3)
     View container3;
+    @InjectView(R.id.container4)
+    View container4;
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.text2)
     TextView text2;
     @InjectView(R.id.text3)
@@ -58,9 +65,12 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
     @InjectView(R.id.button)
     Button button;
 
-    @InjectView(R.id.buttonLinear)
-    Button buttonLinear;
-    @InjectView(R.id.buttonAccelerate)
+    @InjectView(R.id.buttonAnimate)
+    Button animate;
+
+    /*@InjectView(R.id.buttonLinear)
+    Button buttonLinear;*/
+    /*@InjectView(R.id.buttonAccelerate)
     Button buttonAccelerate;
     @InjectView(R.id.buttonAccelerateDecelerate)
     Button buttonAccDec;
@@ -73,11 +83,14 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
 
     @InjectViews({R.id.buttonLinear, R.id.buttonAccelerate, R.id.buttonAccelerateDecelerate,
                          R.id.buttonAnticipate, R.id.buttonOvershoot, R.id.buttonBounce})
-    List<View> buttons;
+    List<View> buttons;*/
 
     private int currentStep;
 
     private int margin;
+
+    private int deltaX;
+    private int deltaY;
 
     public ObjectAnimatorCodeFragment() {
     }
@@ -88,7 +101,7 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.inject(this, v);
 
-        margin = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        margin = getResources().getDimensionPixelSize(R.dimen.padding_big);
 
         text4.setText(Html.fromHtml(IOUtils.readFile(getActivity(), "source/shake.java.html")));
         currentStep = 1;
@@ -99,6 +112,7 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
     public void onNextPressed() {
         switch (++currentStep) {
             case 2:
+                text1.animate().scaleY(0.6f).scaleX(0.6f);
                 container2.setVisibility(View.VISIBLE);
                 image1.setVisibility(View.VISIBLE);
                 text2.setVisibility(View.VISIBLE);
@@ -112,50 +126,59 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
             case 4:
                 image2.setVisibility(View.GONE);
                 text3.setVisibility(View.GONE);
-                setupButton(null, buttonLinear);
-                break;
-            case 5:
-                Utils.dispatchTouch(buttonLinear);
-                break;
-            case 6:
-                setupButton(buttonLinear, buttonAccelerate);
-                break;
-            case 7:
-                Utils.dispatchTouch(buttonAccelerate);
-                break;
-            case 8:
-                setupButton(buttonAccelerate, buttonAccDec);
-                break;
-            case 9:
-                Utils.dispatchTouch(buttonAccDec);
-                break;
-            case 10:
-                setupButton(buttonAccDec, buttonAnticipate);
-                break;
-            case 11:
-                Utils.dispatchTouch(buttonAnticipate);
-                break;
-            case 12:
-                setupButton(buttonAnticipate, buttonOvershoot);
-                break;
-            case 13:
-                Utils.dispatchTouch(buttonOvershoot);
-                break;
-            case 14:
-                setupButton(buttonOvershoot, buttonBounce);
-                break;
-            case 15:
-                Utils.dispatchTouch(buttonBounce);
-                break;
-            case 16:
-                buttonBounce.setVisibility(View.GONE);
                 container2.setVisibility(View.GONE);
                 container3.setVisibility(View.VISIBLE);
+                setupButton(animate, "Linear");
+                break;
+            case 5:
+                Utils.dispatchTouch(animate);
+                break;
+            case 6:
+                setupButton(animate, "Accelerate");
+                break;
+            case 7:
+                Utils.dispatchTouch(animate);
+                break;
+            case 8:
+                setupButton(animate, "Accelerate/Decelerate");
+                break;
+            case 9:
+                Utils.dispatchTouch(animate);
+                break;
+            case 10:
+                setupButton(animate, "Anticipate");
+                break;
+            case 11:
+                Utils.dispatchTouch(animate);
+                break;
+            case 12:
+                setupButton(animate, "Overshoot");
+                break;
+            case 13:
+                Utils.dispatchTouch(animate);
+                break;
+            case 14:
+                setupButton(animate, "Bounce");
+                break;
+            case 15:
+                Utils.dispatchTouch(animate);
+                break;
+            /*case 16:
+                setupButton(animate, "Path");
+                break;
+            case 17:
+                Utils.dispatchTouch(animate);
+                break;*/
+            case 16:
+                animate.setVisibility(View.GONE);
+                container3.setVisibility(View.GONE);
+                container4.setVisibility(View.VISIBLE);
                 break;
             case 17:
                 Utils.dispatchTouch(button);
                 break;
             case 18:
+                button.setVisibility(View.GONE);
                 text4.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -167,20 +190,32 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
     public void onPrevPressed() {
         if (--currentStep > 0) {
             if (currentStep <= 14 && currentStep >= 3) {
-                ButterKnife.apply(buttons, new ButterKnife.Action<View>() {
-                    @Override
-                    public void apply(View view, int i) {
-                        view.setVisibility(View.GONE);
-                    }
-                });
+                animate.setVisibility(View.GONE);
                 image2.setVisibility(View.GONE);
                 text3.setVisibility(View.GONE);
-                setupButton(null, buttonLinear);
+                setupButton(animate, "Linear");
                 currentStep = 4;
                 return;
             }
         }
         super.onPrevPressed();
+    }
+
+    private void setupButton(final Button button, String title) {
+        button.setTranslationX(0f);
+        button.setTranslationY(0f);
+        button.setText(title);
+        button.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                button.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                deltaX = (container2.getWidth() - button.getWidth() - (margin * 2));
+                deltaY = (container2.getHeight() - button.getHeight() - (margin * 2)) * -1;
+
+                return false;
+            }
+        });
     }
 
     private void setupButton(Button old, final Button button) {
@@ -210,7 +245,7 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
         AnimUtils.shakeView(v);
     }
 
-    @OnClick({R.id.buttonLinear, R.id.buttonAccelerate, R.id.buttonAccelerateDecelerate,
+    /*@OnClick({R.id.buttonLinear, R.id.buttonAccelerate, R.id.buttonAccelerateDecelerate,
                      R.id.buttonAnticipate, R.id.buttonOvershoot, R.id.buttonBounce})
     public void onButtonAnimClick(Button button) {
         Interpolator interpolator = null;
@@ -236,6 +271,37 @@ public class ObjectAnimatorCodeFragment extends BaseFragment {
         }
 
         button.animate().translationX(0).setInterpolator(interpolator).setDuration(2000);
+    }*/
+
+    @OnClick(R.id.buttonAnimate)
+    public void onAnimateClick(Button view) {
+        String title = (String) view.getText();
+        Interpolator interpolator = null;
+
+        if (title.contentEquals("Linear"))
+            interpolator = new LinearInterpolator();
+        else if (title.contentEquals("Accelerate"))
+            interpolator = new AccelerateInterpolator(2);
+        else if (title.contentEquals("Accelerate/Decelerate"))
+            interpolator = new AccelerateDecelerateInterpolator();
+        else if (title.contentEquals("Anticipate"))
+            interpolator = new AnticipateInterpolator(1f);
+        else if (title.contentEquals("Overshoot"))
+            interpolator = new OvershootInterpolator(1.0f);
+        else if (title.contentEquals("Bounce"))
+            interpolator = new BounceInterpolator();
+        else if (title.contentEquals("Path")) {
+            Path path = new Path();
+            path.lineTo(0.25f, 0.25f);
+            path.moveTo(0.25f, 0.5f);
+            path.lineTo(1f, 1f);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(view, View.X, View.Y, path);
+            animator.setDuration(800).start();
+            return;
+        }
+
+        view.animate().translationX(deltaX).translationY(deltaY)
+                .setInterpolator(interpolator).setDuration(800);
     }
 
 

@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(ObjectAnimatorCodeFragment.class);
         fragments.add(ViewPropertyAnimatorCodeFragment.class);
         fragments.add(ActivityTransitionsCodeFragment.class);
+        fragments.add(ActivityLTransitionsCodeFragment.class);
         fragments.add(MorphingButtonCodeFragment.class);
         fragments.add(QuestionsFragment.class);
         fragments.add(TheEndFragment.class);
@@ -111,34 +112,20 @@ public class MainActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event.getScanCode());
         BaseFragment fragment = (BaseFragment) getFragmentManager().findFragmentByTag("current");
-        //if (keyCode == 0 || keyCode == 62 || keyCode == 82) {
-            int scanCode = event.getScanCode();
-            switch (scanCode) {
-                case IfICan.BUTTON_NEXT:
-                case 28:
-                case 229:
-                case 0x74:
-                    fragment.onNextPressed();
-                    return true;
-                case IfICan.BUTTON_PREV:
-                case 0x79:
-                case 57:
-                    fragment.onPrevPressed();
-                    return true;
-            }
-        //}
+        int scanCode = event.getScanCode();
+        switch (scanCode) {
+            case IfICan.BUTTON_NEXT:
+            case 28:
+            case 229:
+            case 0x74:
+                fragment.onNextPressed();
+                return true;
+            case IfICan.BUTTON_PREV:
+            case 0x79:
+            case 57:
+                fragment.onPrevPressed();
+                return true;
+        }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        Log.d("IFICAN", "onKeyUp: " + keyCode + " - event: " + event.getScanCode());
-        return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {
-        Log.d("IFICAN", "onKeyMultiple: " + keyCode + " - event: " + event.getScanCode());
-        return super.onKeyMultiple(keyCode, repeatCount, event);
     }
 }

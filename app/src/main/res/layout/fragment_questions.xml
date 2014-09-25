@@ -3,20 +3,20 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/yellow"
+             android:background="@color/accent_pink_50"
              android:id="@+id/container"
              tools:context="com.luciofm.ifican.app.ui.QuestionsFragment">
 
     <com.luciofm.ifican.app.widget.TextView
         android:id="@+id/text1"
         android:gravity="center"
-        android:textSize="130sp"
+        android:textSize="180sp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/pink"
+        android:textColor="@color/accent_pink"
         android:visibility="visible"
-        tools:text="PERGUNTAS?"
+        tools:text="PERGUNTAS??"
         app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
 
     <LinearLayout
@@ -29,92 +29,101 @@
         android:layout_gravity="center">
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="P"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="E"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="R"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="G"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="U"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="N"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="T"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="A"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
             android:text="S"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="130sp"
+            android:textSize="180sp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/pink"
+            android:textColor="@color/accent_pink"
+            android:text="\?"
+            app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
+        <com.luciofm.ifican.app.widget.TextView
+            android:gravity="center"
+            android:textSize="180sp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_pink"
             android:text="\?"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"/>
     </LinearLayout>
@@ -176,8 +185,8 @@
         android:animateLayoutChanges="true"
         android:gravity="center">
         <ImageView
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:scaleType="fitXY"
             android:visibility="gone"
             android:layout_gravity="center"
@@ -188,38 +197,41 @@
         <com.luciofm.ifican.app.widget.TextView
             android:id="@+id/text2"
             android:gravity="center"
-            android:textSize="80sp"
-            android:layout_margin="8dp"
+            android:textSize="@dimen/text_title"
+            android:layout_margin="4dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/yellow"
             android:text="Lúcio Maciel"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"/>
         <com.luciofm.ifican.app.widget.TextView
             android:id="@+id/text3"
             android:gravity="center"
-            android:textSize="80sp"
-            android:layout_margin="8dp"
+            android:textSize="@dimen/text_title"
+            android:layout_margin="4dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/yellow"
             android:text="\@luciofm"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"/>
         <com.luciofm.ifican.app.widget.TextView
             android:gravity="center"
-            android:textSize="80sp"
+            android:textSize="@dimen/text_title"
             android:id="@+id/text4"
-            android:layout_margin="8dp"
+            android:layout_margin="4dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/yellow"
             android:text="github.com/luciofm"
             app:typeFace="YanoneKaffeesatz-Bold.ttf"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:visibility="visible"/>
     </LinearLayout>
 </FrameLayout>

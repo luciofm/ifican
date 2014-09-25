@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/text1"
-        style="@style/TextCode.Small"
+        style="@style/TextCode"
         android:layout_toRightOf="@+id/thumb"
         android:layout_margin="@dimen/padding"
         android:visibility="invisible"
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/text2"
-        style="@style/TextCode.Small"
+        style="@style/TextCode"
         android:layout_toRightOf="@+id/thumb"
         android:layout_margin="@dimen/padding"
         android:visibility="gone"/>
@@ -28,23 +28,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/text3"
-        style="@style/TextCode.Small"
+        style="@style/TextCode"
         android:layout_toRightOf="@+id/thumb"
         android:visibility="gone"
         android:layout_margin="@dimen/padding"/>
-    <TextView
+    <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/text4"
-        style="@style/TextCode.Small"
+        style="@style/TextCode"
         android:layout_toRightOf="@+id/thumb"
         android:visibility="gone"
-        android:layout_margin="@dimen/padding"/>
+        android:layout_margin="@dimen/padding"/>-->
     <ImageView
-        android:layout_width="260dp"
-        android:layout_height="260dp"
+        android:layout_width="100dp"
+        android:layout_height="320dp"
         android:layout_marginLeft="@dimen/padding"
         android:layout_marginTop="@dimen/padding"
+        android:scaleType="centerCrop"
         android:id="@+id/thumb"
         android:viewName="photo_hero"
         tools:src="@drawable/dog1"/>

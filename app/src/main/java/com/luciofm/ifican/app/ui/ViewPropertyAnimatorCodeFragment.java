@@ -39,6 +39,8 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
     View container;
     @InjectView(R.id.image)
     ImageView image;
+    @InjectView(R.id.text1)
+    TextView text1;
     @InjectView(R.id.text2)
     TextView text2;
 
@@ -87,6 +89,8 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
                 });
                 break;
             case 3:
+                text1.setVisibility(View.GONE);
+                image.setVisibility(View.GONE);
                 text2.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -99,6 +103,8 @@ public class ViewPropertyAnimatorCodeFragment extends BaseFragment {
         if (--currentStep > 0) {
             switch (currentStep) {
                 case 2:
+                    image.setVisibility(View.VISIBLE);
+                    text1.setVisibility(View.VISIBLE);
                     text2.setVisibility(View.GONE);
                     break;
                 case 1:

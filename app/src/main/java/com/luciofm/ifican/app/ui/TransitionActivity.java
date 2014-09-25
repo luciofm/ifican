@@ -15,6 +15,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AnticipateOvershootInterpolator;
@@ -49,7 +50,7 @@ public class TransitionActivity extends BaseActivity {
     private static final int ANIM_DURATION = 800;
 
     @InjectView(R.id.toplevel)
-    FrameLayout topLevel;
+    ViewGroup topLevel;
     @InjectView(R.id.thumb)
     ImageView image;
     @InjectView(R.id.text1)
@@ -84,9 +85,9 @@ public class TransitionActivity extends BaseActivity {
         info = bundle.getParcelable("INFO");
         dog = bundle.getParcelable("DOG");
 
-        background = new ColorDrawable(getResources().getColor(R.color.yellow));
+        background = new ColorDrawable(getResources().getColor(R.color.accent_blue));
         background.setAlpha(0);
-        topLevel.setBackground(background);
+        topLevel.setBackgroundDrawable(background);
         image.setImageResource(dog.getResource());
 
         text1.setText(Html.fromHtml(IOUtils.readFile(this, "source/itemclick.java.html")));
@@ -278,16 +279,19 @@ public class TransitionActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Log.d("IFICAN", "onKeyDown: " + keyCode + " - event: " + event);
-        if (keyCode == 0) {
-            int scanCode = event.getScanCode();
-            switch (scanCode) {
-                case IfICan.BUTTON_NEXT:
-                    onNextPressed();
-                    break;
-                case IfICan.BUTTON_PREV:
-                    onBackPressed();
-                    break;
-            }
+        int scanCode = event.getScanCode();
+        switch (scanCode) {
+            case IfICan.BUTTON_NEXT:
+            case 28:
+            case 229:
+            case 0x74:
+                onNextPressed();
+                return true;
+            case IfICan.BUTTON_PREV:
+            case 0x79:
+            case 57:
+                onBackPressed();
+                return true;
         }
         return super.onKeyDown(keyCode, event);
     }

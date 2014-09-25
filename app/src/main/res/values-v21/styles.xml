@@ -12,6 +12,13 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent_blue</item>
         <item name="android:colorControlHighlight">@color/accent_blue_transparent</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowExitTransitionOverlap">true</item>
+
+        <item name="android:windowEnterTransition">@transition/explode_move_together</item>
+        <item name="android:windowExitTransition">@transition/explode_move_together</item>
     </style>
 
     <style name="TextCode" parent="BaseTextCode">

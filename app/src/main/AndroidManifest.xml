@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-          package="com.luciofm.ifican.app" >
+    package="com.luciofm.ifican.app" >
 
     <uses-sdk tools:node="replace" />
 
@@ -13,9 +12,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.luciofm.ifican.app.ui.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,9 +22,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.TransitionActivity"
-            android:theme="@style/AppTheme.Transparent"
-            android:screenOrientation="landscape"/>
+            android:name="com.luciofm.ifican.app.ui.TransitionActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="com.luciofm.ifican.app.ui.LTransitionActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.Blue" >
+        </activity>
     </application>
 
 </manifest>

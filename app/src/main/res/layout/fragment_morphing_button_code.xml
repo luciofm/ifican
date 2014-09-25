@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/green"
+    android:background="@color/accent_blue"
     android:gravity="center"
     android:id="@+id/container"
     android:clickable="true"
@@ -14,30 +14,31 @@
     <com.luciofm.ifican.app.widget.TextView
         android:id="@+id/text1"
         android:text="Morphing Button"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/padding"
         android:gravity="center"
-        android:textSize="90sp"
+        android:textSize="@dimen/text_title"
+        style="@style/TextShadow"
         android:layout_gravity="center_horizontal|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/pink"
+        android:textColor="@color/accent_pink"
         app:typeFace="YanoneKaffeesatz-Regular.ttf"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/padding"
         android:id="@+id/container2"
         android:visibility="gone"
         tools:visibility="visible"
         android:gravity="center">
         <LinearLayout
-            android:layout_width="400dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/pink"
-            android:padding="20dp"
+            android:background="@color/accent_pink"
+            android:padding="@dimen/padding"
             android:id="@+id/container3"
             android:visibility="visible"
             android:gravity="center"
@@ -45,9 +46,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/padding"
                 android:orientation="vertical"
-                android:background="@color/green"
+                android:background="@color/accent_pink_50"
                 android:id="@+id/reg_container">
                 <TextView
                     android:layout_width="match_parent"
@@ -57,17 +58,18 @@
                     android:textSize="20sp"
                     android:gravity="center"
                     android:padding="12dp"
-                    android:textColor="@color/pink"
-                    android:background="@drawable/button_green_pink_pressed_animated"/>
+                    android:textColor="@color/accent_pink"
+                    android:background="@drawable/ripple_press"/>
                 <EditText
                     android:id="@+id/editReg1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/pink"
+                    android:textColor="@color/accent_pink"
                     android:textColorHint="@color/soft_pink"
                     android:hint="email"
+                    android:enabled="false"
                     android:inputType="textEmailAddress"
-                    android:background="@color/soft_light_yellow"
+                    android:background="@android:color/white"
                     android:padding="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -80,8 +82,9 @@
                     android:textColor="@color/pink"
                     android:textColorHint="@color/soft_pink"
                     android:hint="password"
+                    android:enabled="false"
                     android:inputType="textPassword"
-                    android:background="@color/soft_light_yellow"
+                    android:background="@android:color/white"
                     android:padding="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -89,13 +92,14 @@
                     android:visibility="gone"/>
                 <EditText
                     android:id="@+id/editReg3"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/pink"
                     android:textColorHint="@color/soft_pink"
                     android:hint="repeat password"
                     android:inputType="textPassword"
-                    android:background="@color/soft_light_yellow"
+                    android:background="@android:color/white"
                     android:padding="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -116,9 +120,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="@dimen/padding"
                 android:orientation="vertical"
-                android:background="@color/green"
+                android:background="@color/accent_pink_50"
                 android:id="@+id/login_container">
                 <TextView
                     android:layout_width="match_parent"
@@ -129,8 +133,8 @@
                     android:gravity="center"
                     android:padding="12dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/button_green_pink_pressed_animated"
-                    android:textColor="@color/pink"/>
+                    android:background="@drawable/ripple_press"
+                    android:textColor="@color/accent_pink"/>
                 <EditText
                     android:id="@+id/editLog1"
                     android:layout_width="match_parent"
@@ -138,8 +142,9 @@
                     android:textColor="@color/pink"
                     android:textColorHint="@color/soft_pink"
                     android:hint="email"
+                    android:enabled="false"
                     android:inputType="textEmailAddress"
-                    android:background="@color/soft_light_yellow"
+                    android:background="@android:color/white"
                     android:padding="10dp"
                     android:layout_margin="20dp"
                     android:visibility="gone"/>
@@ -150,8 +155,9 @@
                     android:textColor="@color/pink"
                     android:textColorHint="@color/soft_pink"
                     android:hint="password"
+                    android:enabled="false"
                     android:inputType="textPassword"
-                    android:background="@color/soft_light_yellow"
+                    android:background="@android:color/white"
                     android:padding="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -185,20 +191,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textSize="30sp"
-            android:textColor="@android:color/white"
-            android:background="@color/soft_black"
             android:layout_gravity="center"
-            android:padding="12dp"/>
+            style="@style/TextCode"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:textSize="30sp"
-            android:textColor="@android:color/white"
-            android:background="@color/soft_black"
             android:layout_gravity="center"
-            android:padding="12dp"/>
+            style="@style/TextCode"/>
     </TextSwitcher>
 </LinearLayout>

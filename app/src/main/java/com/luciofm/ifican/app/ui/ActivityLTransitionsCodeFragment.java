@@ -1,25 +1,31 @@
 package com.luciofm.ifican.app.ui;
 
 
+
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.luciofm.ifican.app.BaseFragment;
 import com.luciofm.ifican.app.IfICan;
 import com.luciofm.ifican.app.R;
 import com.luciofm.ifican.app.anim.XFractionProperty;
+import com.luciofm.ifican.app.anim.YFractionProperty;
 import com.luciofm.ifican.app.util.ActivityFinishEvent;
 import com.luciofm.ifican.app.util.Dog;
 import com.luciofm.ifican.app.util.Utils;
@@ -38,22 +44,23 @@ import butterknife.OnClick;
  * A simple {@link android.app.Fragment} subclass.
  *
  */
-public class ActivityTransitionsCodeFragment extends BaseFragment {
+public class ActivityLTransitionsCodeFragment extends BaseFragment {
 
     private static final int REQUEST_CODE = 666;
+    @InjectView(R.id.container)
+    ViewGroup container;
     @InjectView(R.id.grid)
     GridView grid;
+    @InjectView(R.id.text1)
+    TextView text1;
 
     ArrayList<Dog> dogs;
 
     private int currentStep;
 
-    private View currentView;
-    private int currentPosition = -1;
-
     boolean override;
 
-    public ActivityTransitionsCodeFragment() {
+    public ActivityLTransitionsCodeFragment() {
     }
 
     @Override
@@ -69,8 +76,6 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
         dogs.add(new Dog(R.drawable.dog8, "dog8"));
         dogs.add(new Dog(R.drawable.dog9, "dog9"));
         dogs.add(new Dog(R.drawable.dog10, "dog10"));
-
-        IfICan.getBusInstance().register(this);
     }
 
     @Override
@@ -89,13 +94,9 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
         grid.setOnItemClickListener(clickListener);
 
         currentStep = 1;
-        return v;
-    }
 
-    @Override
-    public void onDestroy() {
-        IfICan.getBusInstance().unregister(this);
-        super.onDestroy();
+        text1.setText("Activity Transitions - L");
+        return v;
     }
 
     @Override
@@ -103,7 +104,7 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
         switch (++currentStep) {
             case 2:
                 int position = new Random().nextInt(grid.getChildCount());
-                Utils.dispatchTouch(grid.getChildAt(position));
+                clickListener.onItemClick(grid, grid.getChildAt(position), position, 0);
                 break;
             case 3:
                 override = false;
@@ -125,28 +126,19 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
                 currentStep = 2;
 
             Dog dog = (Dog) view.getTag();
-            ViewInfo info = new ViewInfo(view, position);
-            currentView = view;
-            currentView.animate().alpha(0f).setDuration(50);
-            currentPosition = position;
 
-            Intent intent = new Intent(getActivity(), TransitionActivity.class);
+            Intent intent = new Intent(getActivity(), LTransitionActivity.class);
             intent.putExtra("DOG", dog);
-            intent.putExtra("INFO", info);
-            startActivityForResult(intent, REQUEST_CODE);
-            getActivity().overridePendingTransition(0, 0);
+
+            ImageView hero = (ImageView) ((ViewGroup) view).getChildAt(0);
+            //grid.setTransitionGroup(false);
+            container.setTransitionGroup(false);
+
+            ActivityOptions options =
+                    ActivityOptions.makeSceneTransitionAnimation(getActivity(), hero, "photo_hero");
+            startActivityForResult(intent, REQUEST_CODE, options.toBundle());
         }
     };
-
-    @Subscribe
-    public void onActivityFinishedEvent(ActivityFinishEvent event) {
-        if (currentView != null) {
-            currentView.setAlpha(0f);
-            currentView.animate().alpha(1f)
-                    .setStartDelay(Utils.calcDuration(currentPosition) - 300)
-                    .setDuration(350);
-        }
-    }
 
     @OnClick(R.id.container)
     public void onClick() {
@@ -174,13 +166,12 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
 
         //Target will be filled in by the framework
         return enter ? ObjectAnimator.ofFloat(null, new XFractionProperty(), 1f, 0f)
-                       : ObjectAnimator.ofFloat(null, new XFractionProperty(), 0f, -1f);
+                       : ObjectAnimator.ofFloat(null, new YFractionProperty(), 0f, -1f);
     }
 
     public class DogsAdapter extends ArrayAdapter<Dog> {
 
         LayoutInflater inflater;
-
 
         public DogsAdapter(Context context, List<Dog> objects) {
             super(context, 0, objects);
@@ -199,6 +190,8 @@ public class ActivityTransitionsCodeFragment extends BaseFragment {
             ImageView image = ButterKnife.findById(v, R.id.image);
             image.setImageResource(dog.getResource());
             v.setTag(dog);
+
+            image.setViewName(dog.getName());
 
             return v;
         }
